@@ -1,0 +1,7 @@
+@Query("select u from Livro u where lower(u.titulo) like lower(concat('%', ?1,'%')) and u.usuario.id=?2") // passar o id para fazer consulta apenas dos proprios livros
+    List<Livro> findAuthenticatedUserBooksByTitle(String name,long idUser);
+
+@Query("select u from Livro")
+List<Livro> findAll();
+
+@Query(value = "select * from tb_livro tl where lower(tl.titulo) like lower(concat('%', ?1,'%'))", nativeQuery = true)

@@ -1,0 +1,1014 @@
+    npm- mkdir crud,abrir pasta no vscode,criar pasta backend,baixar material icon theme
+- git: cd crud,cd backend,npm init -y:package.json,npm i json-server
+- backend:new file'db.json'
+  * {
+  "products": [
+    {
+      "id": 1,
+      "name": "caneta BIC Preta",
+      "price": 5.89
+    },
+    {
+      "id": 2,
+      "name": "Notebook Mac Pro",
+      "price": 12000.89
+    },
+    {{
+      "id": 3,
+      "name": "samsung ",
+      "price": 5000.89
+    }
+  ]
+}
+
+- package.json no scrits adicionar 
+  * "start": "json-server --watch db.json --port 3001"
+
+- npm start
+- test no postman: x.www..etc
+
+(criando app com angular)
+ - 'ng new frontend --minimal' //past principal crud-dentro 'criar pasta com os arquivos angular'
+ - entrar na pasta frontend 'npm start'
+ - deixar os tres terminal aberto backed,frontend,frontend para modificacao
+
+(conhecendo arquivos de projeto) +++
+ - arquivo angular.json -> "inlineTemplate": false,
+                           "inlineStyle": false, // mudar para false
+
+(HTML do AppComponent)
+
+ - tirar o templete inicial de app.component.ts e colacar apenas uma referencia (templateUrl: 'app.component.html')
+ - criar novo arquivo dentro de app 'app.component.html' -> <h1 app component></h1>
+
+(instalar os components do material)
+
+ - ng add @angular/material
+
+(component cabecalho)
+
+ - ng generated component/ng g c components/templete/header
+ - app.component.html -> <app-header></app-header> // test:head works
+ - <mat-toolbar class="header"> , <span>, <a>, <img src="assets/img/logo.png"> // header.component.html
+
+ - (installar material) se nao tiver achando o mattoolbar baixe isso
+    - npm install --save @angular/material,  npm install --save @angular/animations
+    
+  * import { MatToolbarModule } from '@angular/material/toolbar'; , import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+   
+
+    - imports: [
+    	BrowserModule,
+   	 BrowserAnimationsModule,
+   	 MatToolbarModule
+  	],
+
+ 
+ - header.component.css
+ 
+                                    .header{
+                                        display: flex;
+                                        align-items:center;
+                                    }
+
+                                    .header a {
+                                        display: flex;
+                                        align-items: center;
+                                        text-decoration: none;
+                                    }
+
+                                    .header .logo {
+                                        max-height: 32px;
+                                        
+                                    }
+
+- <mat-toolbar class="header mat-elevation-z4"> a sombra no header
+
+- title ->
+    <span class="title-group">,<a>,<i class="material-icons"> home,
+
+- css -> 
+    .header .title-group {
+    padding-left: 25px;
+    }
+
+    .header .title-group i {
+    padding-right: 5px;
+    }
+
+
+(component rodape)
+
+ - ng g c components/templete/footer
+ - <app-footer></app-footer> // app.component.ht..
+  * footer.componen...
+    - <mat-toolbar>
+    - <span> Desenvolvido com
+    - <i class="material-icons"> favorite
+    - por <strong>Cod<span>3</span>r</strong>
+
+   - styles global
+   .red{
+    color: rgb(227,94,107)
+   } 
+   .v-middle{
+    vertical-align: middle;
+   }
+
+   -  <i class="material-icons red v-middle">,<strong>Cod<span class="red">3</span>r</strong> // footer.compone...
+
+   * footer.component.css....
+     - <mat-toolbar class="footer">
+     - .footer{
+            position: fixed;
+            bottom:0;
+
+            display: flex;
+            justify-content: flex-end;
+          
+        
+        .footer > span {
+              font-size: 1rem;
+              font-weight: 300;
+          }
+
+ (componente navegacao)
+
+  - ng g c components/templete/nav
+  * app.module
+    - import { MatSidenavModule } from '@angular/material/sidenav';
+      import { MatListModule } from '@angular/material/list';
+
+    - MatSidenavModule,
+       MatListModule
+
+  - <app-nav></app-nav> //app.component.ht...
+
+  * nav.component.html
+    - <mat-sidenav-container class="container"> 
+    - <mat-sidenav class="sidenav" mode="side" opened fixedInViewport="true" fixedTopGap="64">,    <mat-nav-list class="nav-list">
+
+       - <a mat-list-item>
+                <i class="material-icons">
+                    home
+                </i>
+                inicio
+            </a>    
+
+       -  <a mat-list-item>
+                <i class="material-icons">
+                    storefront
+                </i>
+                produtos
+            </a>  
+
+  * nav.component.css 
+    - .sidenav{
+          background-color: #3F51B5;
+          width: 200px;
+      }
+
+      .sidenav a {
+          color: #fff;
+      }
+
+      .sidenav i{
+          padding-right: 10px;
+      }                  
+
+    
+ (component home)
+
+ - ng g c views/home
+
+   - <mat-sidenav-content class="content"> //no nav.hmtl,depois do matsidenav penultimo  
+      - <app-home> 
+ 
+   - <mat-sidenav-content class="content">
+    
+   - css-nav 
+      - .content{
+   	 	padding: 16px;
+   	 	background-color: #fff;
+         }
+
+   * app module
+     - import { MatCardModule } from '@angular/material/card';
+     - MatCardModule
+
+   * views home.html
+    - <mat-card>
+    	<mat-card-title>Bem-vindo</mat-card-title>
+    		<mat-card-subtitle>
+        		sistema para exemplificar a construcao de um cadastro em angular
+ 
+	 - home.css
+  	    .home .title{
+   	 	font: 3rem;
+	        font-weight: 300;
+	    	line-height: 1.2;
+	    }
+
+	   .home .subtitle{
+   	        font-size: 1.1rem;
+	   } 
+
+  
+(navengando entre components)
+
+ * baixar router
+   - ng generate module app-routing --flat --module=app
+   
+   - import { NgModule } from '@angular/core';
+     import { RouterModule, Routes } from '@angular/router';
+
+   - const routes: Routes = [];
+ 
+   - @NgModule({
+ 	 exports: [ RouterModule ],
+  	 imports: [ RouterModule.forRoot(routes) ]
+     })
+	 export class AppRoutingModule { }
+
+
+ - ng g c views/product-crud 
+  * nav.html
+    - tirar app-home do sidenavcontent e colocar <router-outlet>
+  * app-routing.module //configurar as rotas para home e product
+   
+ - import { HomeComponent } from "./views/home/home.component";
+   import { ProductCrudComponent } from "./views/product-crud/product-crud.component";
+   
+ -  //caminhos 
+  {
+    path: "",
+    component: HomeComponent
+  },
+  {
+    path: "products",
+    component: ProductCrudComponent
+  } 
+
+ * nav.html
+   - <a mat-list-item routerLink=""> ,  <a mat-list-item routerLink="/products"> 
+
+ - routerLink="/" // no logo 
+
+(deretivas na pratica 'attribute')
+
+ //vamos mudar a cor do caracao favorite formatado nao com uma style e sim directives
+ 
+ - ng g d directives/red
+
+ * red.directives.ts
+   -  constructor(private el: ElementRef) { 
+    	el.nativeElement.style.color = "#e35e6b"
+      }
+  
+   - footer.html // no lugar do red styles colocar appRed so que fora da class
+ 
+resumo:private el: ElementRef
+       el.nativeElement.style.color="green";
+
+ (directives estrutural)
+
+  - ng g d directives/for
+  
+  - fazer console.log no construtor da fordirective  e setar myfor no home.html, ver no console
+  
+  - implements OnInit -> ngOnInit(): void  // inicializacao 
+  
+  - home.html
+     - <ul>
+        <li *myFor="let n em [1, 2, 3] usando 'teste'"></li>
+       </ul>
+
+  - antes de construtor
+  	@Input('myForEm') numbers : number[] // depois de em ai que pego
+  	@Input('myForUsando') texto : string // depois de usando ai que pego
+  - se de error colocar numbers! // a exclamacao
+
+  - ngOnInit
+       console.log(this.numbers); +++
+       console.log(this.texto)
+
+  - proximo topico excluir: (usando 'teste') e (console.log(this.texto)), (@Input('myForUsando') texto! : string)
+
+  - dentro do contrutor
+      -  private container: ViewContainerRef,
+         private template: TemplateRef<any>
+
+  - dentro de ngOnInit
+    	for(let number of this.numbers){
+      	  this.container.createEmbeddedView(this.template)
+    	}
+    
+       - este container vai ser aplicado com o que esta dentro da diretica = *myFor -> <li>
+   
+
+  - colocar para aparecer os numeros tambem 'valor implicit
+     - <li *myFor="let n em [1, 2, 3]">{{ n }}</li> / home.html
+     -  ngfordirective
+         - this.container.createEmbeddedView(this.template, {$implicit: number}) // 
+
+  - o  valor implicito é o valor que esta na variavel let a 
+    
+     <li *myFor="let n em [1, 2, 3]">{{ n }}</li>
+
+resumo: ViewContainerRef
+	TemplateRef<any>
+	createEmbeddedView(this.templete, {$implicit: numbers})
+
+(component criar produto)
+ 
+* adicionar nas routes
+ -  ng g c components/product/product-create
+ - import { ProductCreateComponent} from "./components/product/product-create/product-create.component";
+ 
+ - {
+    path:"products/create",
+    component:ProductCreateComponent 
+  }
+
+(bindings) sem commit apenas exemplo
+
+ - bindigs é voce  atribuir um metodo ou atributo ao seu templete o id="nome ou click="".
+   resumindo é como voce atribuir um metodo ou atributo em uma tag
+ 
+  * atribuindo tributo
+    - product-create.ts
+       - propLegal = "qualquer";
+    - product-creat.html
+       - <p [id]="propLegal">product-create works!</p> //perceba que tem os [] no id
+
+ * metodos 
+   - product-create.ts
+     - fazerAlgo(): void {
+         console.log('fazendo algo');
+       }
+     - <button (click)="fazerAlgo()">fazer algo</button> //perceba os () no click para chamar o metodo
+
+
+(Navegar para Tela de Criar Produtos)
+  *appModule
+   - import { MatButtonModule } from '@angular/material/button';
+   - MatButtonModule
+ 
+  * productcrud.ts
+   - navigateToProductCreate():void{
+      console.log('navegando...')
+     }
+  
+  * productcrud.html
+    <button mat-raised-button (click)="navigateToProductCreate()">
+       Novo Produto
+    </button>
+
+    //ok esta funcionando olhe no console. agora eu vou mandar esse metodo carrega o productcreate
+
+ * modificar o  metodo navigateToProduc...
+    
+    - navigateToProductCreate():void{
+       this.router.navigate(['/products/create'])
+      }
+
+(produto modelo)
+
+ - dentro do product
+   - file 'product.model.ts
+      - export interface product{
+           id?: number
+           name: string
+           price: number
+        }
+      - tem um ? porque quando eu inserir o id eu nao preciso o backend que vai fazer, 
+         mas quando eu consultar,deletar etc eu vou precisa entao por isso tem o ? 
+
+(produto service)
+
+ - ng g s components/product/product
+ 
+ * product.service
+     showOnConsole(msg: string): void{
+       console.log(msg);
+     }
+ 
+ * product-create.com...ts
+    - constructor(private productService: ProductService){}
+    
+    - ngOnInit(): void {
+       this.productService.showOnConsole('test...')
+      }
+
+    - import { ProductService } from './../product.service';
+
+   
+  * product.service.ts
+    - import { MatSnackBar } from '@angular/material/snack-bar';
+        
+    - constructor(private snackBar: MatSnackBar) { }   
+ 
+    - mudar o nome do metodo
+       * showMessage(msg: string): void{
+           this.snackBar.open(msg, 'x',{
+             duration:3000,
+             horizontalPosition: "right",
+             verticalPosition: "top"
+            })
+         } 
+   * product.create.ts
+     - createProduct(): void{
+    		this.productService.showMessage(''produto criado!'')
+       }  
+     - apagar this do ngOnInit
+
+       cancel(): void{
+         this.router.navigate(['/products'])
+       }
+
+    * product-create.html
+      - <button mat-raised-button (click)="createProduct()" color="primary">
+    	   salvar
+	</button>
+
+	<button mat-raised-button (click)="cancel()" color="primary">
+    	   cancelar
+	</button>
+
+(metodo criar produto) +++
+ - agora vamos realmente salvar produtos no backend
+ - vamos precisar do clientHttp para que possamos inserir algo no backend
+ - vamos usar observable
+
+ * appmodule
+   - import { HttpClientModule } from '@angular/common/http';
+    -  HttpClientModule//import
+
+ * product.service.ts
+   - constructor(private snackBar: MatSnackBar, private http: HttpClient) { }//adicionar o httpcli...
+   - import { HttpClient } from '@angular/common/http'; /import
+
+   - create(product: Product): Observable<Product> {
+       return this.http.post<Product>(this.baseUrl, product)
+     } // a url do backend, observable = vou disparar quando essa açao for concluida, para chamar o (product criado)
+  
+   - baseUrl = "http://localhost:3001/products"
+
+ * product.create.ts
+  
+  - produto para salvar no back
+     product: Product = {
+      name: 'Produto de Teste',
+      price: 125.98
+     }
+
+  - createProduct(): void{
+    this.productService.create(this.product).subscribe(() =>{
+      this.productService.showMessage('produto criado!')
+      this.router.navigate(['/products'])
+    })
+
+  - o subscribe vai ter uma funcao, porque o create vai retorna um observable, quando retorna 
+    eu lanço a mensagem produto criado, e se eu quiser eu chamo a rotar para retorna a tela de 
+    products
+  
+  - os this serva tanto para mostrar as mensagens quanto para retorna, (depois dos 3 secs volto para tela de produtos)
+   
+  
+
+
+(formulario criar produto)
+  apagar produtos inseridos no banco  
+
+  - vamos criar o form ja que ja temos a conexao, so falta criar o templete para cadastrar produto
+
+  *appModule
+   - 	import { FormsModule } from '@angular/forms';
+	import { MatFormFieldModule } from '@angular/material/form-field';
+	import { MatInputModule } from '@angular/material/input';
+   - depois instanciar nos import
+
+ * create-product.html
+  - <mat-card>
+      <mat-card-title>novo produto</mat-card-title>
+        <form>
+           <mat-form-field>
+            <input matInput placeholder="name">
+           </mat-form-field>
+
+           <mat-form-field>
+            <input matInput placeholder="preco (R$)">
+           </mat-form-field>
+  
+             //os button depois de fechar o form
+
+  * fazer a conexao com o component.ts
+     - <input matInput placeholder="name" [(ngModel)]="product.name" name="name">
+     - <input matInput placeholder="preco (R$)" [(ngModel)]="product.price" name="price">
+     - test no db.json para ver se esta salvando, depois apague o produto deixar null, pois 
+       é papel do formulario fornecer os dados
+     - no product.model.ts mudar o tipo do price para any e no input colocar type="number" para aceitar apenas number
+     
+  * css 
+     - form{
+    	 display:flex;	
+         flex-direction:column;
+	}
+       
+       button {
+         margin:20px 15px 0px 0px;
+
+        }
+
+(componente obter produto)
+ 
+ - ng g c components/product/product-read
+
+ * product-crudcomponent.html
+   - color="primary" no button e no css colocar margin-bottom: 30px
+   - <app-product-read></app-product-read>
+
+ * product.service.ts
+   - read(): Observable<Product[]>{
+      return this.http.get<Product[]>(this.baseUrl)
+     }
+
+ * product-read.ts
+   - products!: Product[]
+   - ngOnInit(): void {
+    	this.productService.read().subscribe(products => {
+      	this.products = products
+      	console.log(products)
+    	})
+     }
+
+(exibindo produto com *ngFor)
+
+ * product-read.html
+   - <ul>
+    	<li *ngFor="let product of products">
+        	{{product.id}} => {{product.name}}
+    	</li>
+     </ul>
+
+(gerando component tabela)
+  pesquisar no material schematics
+ - ng generate @angular/material:table components/product/product-read2
+ - <app-product-read2></app-product-read2> // productcrud.html
+ - [pageSizeOptions]="[5, 10, 50]" // product-read2.html
+
+(entendento componente gerado)
+  * product-read2-datasource.ts
+    - apagar o  interface ProductRead2Item 
+    - substituir ProductRead2Item para Product (resolver error: case 'id': return compare(+a.id!, +b.id!, isAsc);)
+    - colocar o ? no price
+
+  * product-read2-component.ts
+    - onde estiver o ProductRead2Item "tirar" e no mat deixar apenas o product
+
+(tabela produtos)
+ 
+ - copiar html do read2 e colocar no read apagar paginator|sort arial"elemets"
+ - clonar o ngcontainer de nome e modificar para buscar price
+ - apagar a referencia para read2 se tiver feito o da aula anterior
+
+ * read.compo...ts
+   - displayedColumns = ["id","nome", "price"]
+
+ * read.html 
+   - apagar todas referencias para paginator| sort
+   - <table mat-table [dataSource]="products">
+
+ * read.css
+  - table{
+      width:100%;
+    }
+
+ * read.html ( colocar um pipe no price ==R$)
+  - <td mat-cell *matCellDef="let row">{{row.price | currency: 'BRL'}}</td>
+
+ * appModule
+  - import { NgModule, LOCALE_ID } from '@angular/core';
+    import localePt from '@angular/common/locales/pt';
+    import {registerLocaleData} from '@angular/common';
+    
+   - providers: [{
+       provide: LOCALE_ID,
+       useValue: 'pt-BR'
+      }],
+
+  - 
+
+    registerLocaleData(localePt);
+
+(adicionando coluna acões)
+ 
+ - clonar o ngcontainer de price
+ - alterar os nomes
+     <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef >Ações</th>
+
+ * read.ts
+   - displayedColumns = ['id','name', 'price', 'action'] // adicionar o campo action
+
+ - read.html  // criar os icones
+
+   - 
+          <a RouterLink="" class="edit">
+            <i class="material-icons">
+               edit
+            </i>
+          </a>
+
+          <a RouterLink="" class="delete">
+            <i class="material-icons">
+               delete
+            </i>
+          </a>
+
+ * read.css
+   - adicionar
+     - .edit{
+         margin-right: 10px;
+        }
+
+       .edit > i{
+         color:#d9cd26;
+        }
+
+       .delete > i{
+         color:#e35e6b;
+        }
+
+(novos metodos em produto service)
+
+ - 
+  readById(id: string): Observable<Product>{
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.get<Product>(url);
+  }
+
+  update(product: Product): Observable<Product>{
+    const url = `${this.baseUrl}/${product.id}`
+    return this.http.put<Product>(url,product)
+  }
+
+
+(componente atualizar produto 1)++
+
+ - ng g c components/product/product-update
+ 
+ * routing.module
+   - {
+      path:"products/update/:id",
+      component:ProductUpdateComponent 
+     }
+   - fazer test
+
+ * read.html
+   
+   -  <a routerLink="/products/update/{{ row.id }}" class="edit"> 
+   - test passando o mouse  
+
+(componente atualizar produto 2)
+
+  - copiar creat.html(codigo) e cole no update.html e faça a adaptacao
+  
+  * updte.html alteracoes 
+    - <mat-card-title>Alterar produto</mat-card-title>
+    - <button mat-raised-button (click)="updateProduct()" color="primary">
+
+ * update.ts
+   - constructor(private productService: ProductService, private router: Router) { }
+  
+
+   -  updateProduct(): void{
+
+  }
+
+  
+   - cancel(): void{
+    this.router.navigate(['/products'])
+   }
+
+   - constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
+   
+   -  product!:Product // anter do contru..
+  
+   -  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id')
+    this.productService.readById(id!).subscribe(product => {
+      this.product = product
+    })
+  }
+
+  
+  -  updateProduct(): void{
+    this.productService.update(this.product).subscribe(() => {
+      this.productService.showMessage('produto atualizado com sucesso!')
+      this.router.navigate(['/products'])
+    })
+  }
+
+(metodo excluir produto)
+
+ * productservice
+   -  delete(id:String): Observable<Product>{
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.delete<Product>(url);
+      }
+  
+   -  mudar o nome no update de salvar para atualizar
+
+(componente excluir produto)
+
+ - ng g c components/product/product-delete
+ 
+ - colocar a rotar delete
+  {
+    path:"products/delete/:id",
+    component:ProductDeleteComponent 
+  }
+
+ * read.html
+   - <a routerLink="/products/delete/{{ row.id }}" class="delete">
+
+ * copiar a update.html para delete.html
+
+ * delete.html
+  
+  - <mat-card-title>Excluir produto</mat-card-title>
+  
+  - <input matInput placeholder="name" [value]="product.name" name="name" disabled> //pro preco tambem
+
+  - <button mat-raised-button (click)="deleteProduct()" color="primary"> // metodo delete
+
+  - atualizar para deletar
+
+ * delete.ts
+  
+  - product!: Product
+  
+  - constructor(private productService: ProductService, private router: Router) { }
+
+  - 
+    deleteProduct():void{
+
+    }
+
+    cancel(): void{
+     this.router.navigate(['/products'])
+    }
+
+ - 
+  ngOnInit(): void {
+    const id = '1'
+    this.productService.readById(id).subscribe(product => {
+      this.product = product;
+    })
+  }
+
+ - agora ele vai carregar o delete todos com id 1 = caneta bic ======
+
+ - deleteProduct():void{
+    this.productService.delete(this.product.id!).subscribe(() => {
+      this.productService.showMessage('produto excluido com sucesso!')
+      this.router.navigate(['/products']);
+    })
+   }
+
+ - constructor(private productService: ProductService, private router: Router,private route: ActivatedRoute) { }
+
+ - ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+      this.productService.readById(id!).subscribe(product => {
+      this.product = product;
+    })
+  }
+
+ - color="warn" pro atualizar e deletar
+
+ - colocar margin-top: 20px no creat.css,update.css,delete.css
+
+
+(exibindo as mensagens de Error)
+
+ //se o nosso backend estiver desativado ou algum error vou mostrar uma mensagem
+
+ * style
+   - .msg-sucess{
+       background-color: #28a745;
+       color:#fff;
+     }
+
+     .msg-error{
+       background-color: rgb(227,94,107);
+       color:#fff;
+     }
+
+  * product-service
+
+    - showMessage(msg: string, isError:boolean = false): void{
+        - panelClass:isError ? ['msg-error'] : ['msg-sucess']
+
+
+   - create(product: Product): Observable<Product> {
+        return this.http.post<Product>(this.baseUrl, product).pipe(
+        map(obj => obj),
+        catchError(e => this.errorHandler(e))
+        );
+     }
+
+	exclicacao: aqui vou fazer a requisicao depois dentro do pipe vou apenas receber
+        esse objeto, mas se tiver um error no 'this.htt...' vai cair no tratamento (catchError)
+
+
+
+   - errorHandler(e: any): Observable<any>{
+      console.log(e)
+      this.showMessage('ocorreu um error!', true)
+      return EMPTY
+     }
+     
+
+   imports necessarios
+   - import { EMPTY, Observable,catchError } from 'rxjs';
+   - import { map } from 'rxjs/operators';
+
+
+  - colocar esse catch para "todas" operacoes read,update,delete... e aqui voce pode 
+    tratar da melhor forma para cada requisicao 
+    
+    .pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+
+
+ (atualizando titulos)
+
+ - ng g s components/templete/header/header
+
+ - criar dentro de header header-data.model.ts
+ 
+ * header-data.model.ts
+   - export interface HeaderData{
+      title:string
+      icon:string
+      routerUrl:string
+    }
+
+ * header.html
+   - <span class="title-group">
+        <a routerLink="">
+
+* header.service
+  
+ - HeaderData = new BehaviorSubject<HeaderData>({
+    title: 'início',
+    icon: 'home',
+    routeUrl: ''
+   }) // anter de contr.... 
+
+ -  get HeaderData(): HeaderData{
+     return this._HeaderData.value
+    }
+
+    set HeaderData(headerData: HeaderData){
+     this._HeaderData.next(headerData)
+    }
+
+* header.ts
+
+  -   constructor(private headerService: HeaderService) { }
+
+  - get title(): string{
+     return this.headerService.HeaderData.title
+    }
+
+    get icon(): string{
+     return this.headerService.HeaderData.icon
+    }
+
+    get routeUrl(): string{
+     return this.headerService.HeaderData.routeUrl
+    }
+
+* header.html
+
+ - 
+    <span class="title-group">
+        <a routerLink="{{routeUrl}}"> +++
+            <i class="material-icons">
+                {{ icon }} ++++
+            </i>  
+            {{ title }}  +++
+        </a>
+
+
+    </span>
+
+* home.ts
+
+  - constructor(private headerService: HeaderService) {
+      headerService.HeaderData = {
+       title:'inicio',
+       icon: 'home',
+       routeUrl: ''
+      }
+
+    }
+
+* product-crud.ts
+
+ - constructor(private router:Router, private headerService: HeaderService) { 
+    headerService.HeaderData = {
+      title:'cadastro de produto',
+      icon: 'storefront',
+      routeUrl: '/products'
+    }
+  }
+
+(exibir mensagem com ngx toast)
+
+ * instalar na versao: npm i ngx-toastr@13.2.1
+ 
+ * copiar o css e colocar angular.json no 'style' antes de src -> "node_modules/ngx-toastr/toastr.css"
+
+ * baixar os modulos
+     -  nos imports:
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot(), // ToastrModule added
+
+ * colocar o private toastr: ToastrService para usarmos no service 
+
+ * criar metodo:
+   -  exibirMensagem(titulo:string,mensagem:string,tipo:string): void{
+   -  this.toastr.show(mensagem,titulo,{closeButton:true, progressBar:true},tipo) //closebut..botao fechar
+
+ * criar metodo:
+   - errorHandler(e:any): Observable<any>{
+   - this.exibirMensagem('Error!', 'nao foi possivel realizar a operacao', 'toast-error')
+   - return EMPTY // 
+
+ * .pipe(
+      map(retorno => retorno),
+      catchError(error => this.exibiError(error))
+    ) // pipe:lista todas as mensagem caso o metodo nao der successful. map: retorna a propria mensagem. catcherror: pegar os error e envia
+ 
+
+(angular datatables)
+
+- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+
+-  dtOptions: DataTables.Settings = {};
+-   dtTrigger = new Subject<any>();
+-  data:any
+
+-  ngOnInit
+   this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5
+    };
+
+- this.httpClient.get('https://dummy.restapiexample.com/api/v1/employees').subscribe((res:any) => {
+    this.data = res.data;
+    this.dtTrigger.next(res.data);
+   })
+
+- imple...onDestroy 
+  
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+- <tr *ngFor="let e of data">
+
+ - <td>{{ e.employee_name }}</td>
+project-angular (Guia)
+
+(criando app com angular e configurando)
+(component cabecalho)
+(component rodape)
+(component home)
+(navengando entre components) -> ng generate module app-routing --flat --module=app
+(component criar produto)
+(Navegar para Tela de Criar Produtos) criado user-crud,user-create
+(produto modelo)
+(produto service) test on console
+(metodo criar produto)
+(formulario criar produto)
+(componente obter produto)
+(exibindo produto com *ngFor)
+(adicionando coluna acões)
+(novos metodos em produto service readbyid)
+(componente atualizar produto )
+(metodo excluir produto) +++
+(componente excluir produto)
+(exibindo as mensagens de Error)
+(atualizando titulos)
+
+closebut..botao
+ng2-smart-table 
+

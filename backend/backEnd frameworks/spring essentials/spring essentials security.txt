@@ -1,0 +1,218 @@
+docker compose up
+docker ps = lista os containers que estao sendo utilizados
+socker ps -a = lista todos containers que voce tem
+docker-compose down = remove os containers menos os volumes
+
+mvn clean install
+
+++++++stop in userDetails+++
+
+(validation)
+- http://localhost:8080/animes?trace=true saber o error
+
+- class securityConfig
+    * @EnableWebSecurity, extends WebSecurityConfigurerAdapter
+    * http,auth
+- csrf token
+    * .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+-  perAutho..
+    * @PreAuthorize("hasRole('ADMIN')")
+    * @EnableGlobalMethodSecurity(prePostEnabled = true) 
+- antMatcher 
+    .antMatchers("/workers/admin/**").hasRole("ADMIN")
+    .antMatchers("/workers/**").hasRole("USER")
+  
+
+(security)
+ git commit -m "spring security com autenticacao e autorizacao e seguranca a nivel de metodo"
+ - dependencia do spring security, so de fazer isso ja vem com uma seguranca basica,a senha vem no 
+   log e usuario padrao é user
+ - 401: nao autenticado, 405: nao tem permissao nao pode ver
+
+ - criar uma classe de configuracao de seguranca com 
+  @EnableWebSecurity = classe de config de seguranca
+  WebSecurityConfigurerAdapter = uma reconhecida do spring
+
+ - dois metodo dentro da classe um para proteger todas as requisicoes http sendo que todas 
+   estejam autenticadas e outro definir os usuarios em memoria
+    HttpSecurity && AuthenticationManagerBuilder
+
+ - o primeiro auth..req..,any.auth,basic
+
+ - o segundo metodo voce precisa criptografar a senha e definir dois user um com acesso de 
+   administrador e o outro com apenas o user
+   usesr,senha,roles
+    
+   * PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+   * auth.inMemor.user.password.roles.and.(outro user) 
+    
+   (csrf Token)
+   
+   com as configuracoes que ja fizemos, nao podemos salvar nada com o post pois a parte de csrf esta
+   habilitada por questao de seguranca voce pode fazer um test desabilitando-a com 
+   http.csrf().disable = agora salvar mas sem verificaçao,
+ 
+   porem temos que criar um token para fazer as verificaçoes
+   
+   * http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+   no postman dá um get depois ele retorna o cookie com um name e um value, pegar os dois e 
+   colocar no postman ai vai salvar no banco "201"
+   
+   *name = X-XSRF-TOKEN value  c62....
+   quando coloco httponlyfalse ele so aceita se estiver com com um token, agora quando os framewworks de 
+   front for fazer requisicoes eles precisam passar este token
+   o csrf so entra em vigor com rerquisicoes que afetam o estado servidor
+
+   para nao ficar fazendo isso toda vez podemos automatizar
+   
+   get do postmaan em test coloque:
+   - var xsrfCookie = postman.getResponseCookie("XSRF-TOKEN");
+     postman.setEnvironmentVariable("x-xsrf-token", xsrfCookie.value);
+   - crie um novo ambiente e da um get
+   - no post-> headers coloque: value :{{x-xsrf-token}} 
+
+   mas para facilitar a continuacao do curso deixar cssrf como disable, mas em producao tem que esta 
+   ativado
+
+  (Segurança a nível de métodos com PreAuthori)
+
+  - existe alguns metodos que eu so preciso esta autenticado para executar basta a role padrao 
+   'user' mas outro metodos que afetam o estado do servidor como o post eu vou querer que para
+   executa-lo a role dele precisa ser o 'ADMIN'
+ 
+  - no post eu coloco
+    @PreAuthorize("hasRole('ADMIN')")
+    //significa que antes de excutar verifique a role se é a correspondente
+
+  - nas securityConfig
+    @EnableGlobalMethodSecurity(prePostEnabled = true) 
+  
+ (Authentication Principal e página padrão de)
+
+ se quiser ver quem esta autenticado basta colocar no metodo de findbyid e depois colocar um log para 
+ ver no info
+  - @AuthenticationPrincipal UserDetails userDetails   
+  - log.info(userDetails);
+
+ * tambe pode colocar uma pagina de login padrao basta colocar formLogin() no metodo de http
+   - quando acessar a url no localhost do navegar vai pedir a senha 
+   - se quiser sair basta colocar localhost:8080/logout -> "logout"
+
+ ++filtros do security++
+     * BasicAuthenticationFilter //vai verificar autenticacao encodada 
+     * UsernamePasswordAuthenticationFilter // se corresponde os usuarios e senha
+     * DefaultLoginPageGeneratingFilter //gera login
+     * DefaultLogoutPageGeneratingFilter
+     * FilterSecurityInterceptor //checar se voce esta autorizado
+     * Authentication -> Authorization // authen..voce esta autenticado mas nao tem permissao para 
+       determinadass portas ja o autho voce tem acesso a tudo
+     * @param http
+     * @throws Exception 
+
+
+(autenticacao com usuario no banco)
+
+ - definir na class user a implementacao da interface UserDetails
+ - definir alguns atributos private String userName,private String authorities;
+ - definir as caracteristicas especificas como "conta isAccountNonExpired..etc" todas 4 como true
+ - se nao estiver usando lombok definir os sets que faltam
+ - usar java 8 para filtrar as roles do authorities
+    - @Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Arrays.stream(authorities.split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+	}
+
+ *UserService
+
+ - definir a implementacao da detailsService implements UserDetailsService
+ - no metodo que gerou do userDeta..
+    - @Override
+	public UserDetails loadUserByUsername(String username){
+		return Optional.ofNullable(repository.findByuserName(username))
+				.orElseThrow(() -> new UsernameNotFoundException("worker user not found"));
+	}
+
+ - usar o passwordEncoder para criptografar as senhas antes de salvar no banco(post). Usar tambem no put
+   - 	PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		obj.setPassword(passwordEncoder.encode(obj.getPassword()));
+
+ - no repository criar um novo metodo do username que o userDetails gerou no user
+     - Worker findByuserName(String userName);
+
+ * securityConfig
+  - definir construtor do userService
+     - private final WorkerService workerService;
+
+  - encodar a class userService
+       - auth.userDetailsService(workerService).passwordEncoder(passwordEncoder);
+ 
+ * configuration
+  - colocar os user depois de mudar a class user
+     - Worker worker = new Worker(null,"guilherme henrique","guilherme",1200.0,"{bcrypt}$2a$10$kVStg9UcqLzpufBXvWsJ0uZmI6yuRtFo6/mFedY3w5bTb90VwjfuS","ROLE_ADMIN,ROLE_USER",dep1);
+       Worker worker2 = new Worker(null,"trabalhador","trabalhador",3200.0,"{bcrypt}$2a$10$kVStg9UcqLzpufBXvWsJ0uZmI6yuRtFo6/mFedY3w5bTb90VwjfuS","ROLE_USER",dep1);
+
+ (Proteção de URL com Antmatcher)
+
+ ao inves de colocar em cada url que tem as preAutho..., isso pode ser simplificado com o Antmatcher,quando o usuario for
+ fazer a requisicao ele informar se é um administrador ou user (se tiver admin tem autozicoes com privilegios)
+   - localhost:8080/user/admin/{id}
+
+ - entao o httpSecurity da class securityConfig fica assim
+     - @Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable()
+		//.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()
+		.authorizeRequests()
+		.antMatchers("/workers/admin/**").hasRole("ADMIN")
+		.antMatchers("/workers/**").hasRole("USER")
+		.anyRequest()
+		.authenticated()
+		.and()
+ - e podemos substituir o preAuth..
+   - @RequestMapping(value="/{id}",method = RequestMethod.POST) XXX "antigo"
+     @PreAuthorize("hasRole('ADMIN')") "now"
+
+docker-compose para testar
+
+version: '3.8'
+
+networks:
+  api-network:
+    driver: bridge
+
+volumes:
+  devdojo_data: 
+
+services:
+  mysql_server:
+    image: mysql:5.6
+    container_name: mysql:5.6
+    volumes: 
+      - mysql-vol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=anime
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - api-network
+
+aplication.properties test
+
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/anime?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+ 
+
+ 

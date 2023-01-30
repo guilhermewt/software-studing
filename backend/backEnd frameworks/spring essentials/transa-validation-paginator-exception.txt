@@ -1,0 +1,181 @@
+(transactional)
+uso como forma de garantia se der tudo certo no metodo, ai sim eu 
+eu concluo e salva no banco, ele nada mais é do que rolback do jpa
+
+- @transaction -> no metodo
+- @transaction(rollbackFor = Exception.class //se o metodo for do tipo 
+ checking throws "exception"
+
+- verificar se no banco e innerDB ele aceita o transactional 
+- para quem quiser trocar aí para INNODB: ALTER TABLE anime ENGINE=INNODB;
+
+(validacao)
+
+- baixar e colocar no post @valid
+- @NotEmpty(message = "the department name cannot be empty")
+
+
+(exception)
+alt+shit+a
+
+- validacoes para tipo 'data' voce pode usar nonNull do pacote
+    import org.springframework.lang.NonNull
+
+- criar uma class padrao exceptionDetails 
+  - private Instant timestamp;
+	private Integer status;
+	private String title;
+	private String details;
+	private String developerMessage;
+
+- criar a class que vai captura
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException{
+
+- criar subclass de exceptionDetails sera responsavel ela que vai servir
+de base para criar os handler
+   - @Getter
+@SuperBuilder
+public class BadRequestExceptionDetails extends StandardError implements Serializable 
+
+- criar exception handler 
+   - @ControllerAdvice
+   
+ @ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<BadRequestExceptionDetails> resourceNotFound(BadRequestException bre){
+		return new ResponseEntity<>(BadRequestExceptionDetails.builder()
+				.timestamp(Instant.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.title("bad Request Exception, check the documentation")
+				.details(bre.getMessage())
+				.developerMessage(bre.getClass().getName())
+				.build(), HttpStatus.BAD_REQUEST);
+		
+	}
+		
+	}
+
+- pode mudar o dataBaseException para:
+   - catch (DataIntegrityViolationException e) {
+			throw new BadRequestException(e.getMessage());
+		}
+
+(criar uma excessao especifica para validation)
+
+ - criar classe
+   - public class ValidationExceptionDetails extends StandardError{
+ 
+ - private final String fields; // para pegar o campo com error -> name
+   private final String fieldsMessage; // message que tiver com o campo
+
+ - no handler vamos ter que saber o nome da class que captura a excessao, entao coloque
+ http://localhost:8080/autores(?trace=true) no postman
+
+ - criar novo metodo no handler 
+
+   * 	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ValidationExceptionDetails> handlerMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+
+   * fieldErrors =  pegar todo os errors e colocar em um array
+     fields  = vai pegar os campos da excessao "atributos"
+     fieldsMessage = pegar as menssagens do atributo
+   
+     List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+     String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(","));
+     String fieldsMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
+	
+   * return new ResponseEntity<>(ValidationExceptionDetails.builder()
+				.timestamp(Instant.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.title("bad Request Exception, invalid fields")
+				.details(exception.getMessage())
+				.developerMessage(exception.getClass().getName())
+				.fields(fields)
+				.fieldsMessage(fieldsMessage)
+				.build(), HttpStatus.BAD_REQUEST);
+
+ * only test url
+    @org.hibernate.validator.constraints.URL(message = "the url is not valid")
+	private String url;
+
+(Sobrescrevendo handler do Spring)
+
+ - ao colocar um json errado 'sem uma aspa por exemplo' o spring ja tem uma tratamento padrao, nós queremos
+   usar esse tratamento do nosso jeito,exibir da nossa forma.
+
+ - o spring ja tem um conjunto de tratamento para ver é so colocar 
+       extends ResponseEntityExceptionHandler na class handler
+
+ - o error que é gerado no error do json é 'HttpMessageNotReadableException'
+
+ - vamos procurar nos if ele e entrar dentro do handler que ele está gerando, todos os 
+   errors sao gerador pela class 'return handleExceptionInternal' entrar nela e copiar
+   todo o metodo
+
+ - copiar todo metodo e colar no nosso handler
+    * protected ResponseEntity<Object> handleExceptionInternal(
+			Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
+			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+		}
+		return new ResponseEntity<>(body, headers, status);
+	}
+	
+ - colocar um @override
+
+ - modificar: apagar o if e
+     * ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+		.timestamp(Instant.now())
+		.status(status.value())
+		.title(ex.getCause().getMessage())
+		.details(ex.getMessage())
+		.developerMessage(ex.getClass().getName())
+		.build();
+		
+		return new ResponseEntity<>(exceptionDetails, headers, status);
+
+ - fazendo isso todos os tratamentos padrao vao gerar este error pois essa é a class padrao
+ 
+ - entrar nos if da methodArgu... entrar dentro do return handleMethodArgumentNotValid e copiar
+   a assinatura 
+
+ - trocar assinatura do nosso metodo do handler e colocar o @over...
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+ - trocar de ex para exception
+
+(paginacao)
+
+ - colocar nos findAll  do controller
+   @GetMapping
+	public ResponseEntity<Page<Department>> findAll(Pageable pageable){
+		return ResponseEntity.ok(service.findAll(pageable));
+	}
+
+ - colocar no findall do  service
+   public Page<Department> findAll(Pageable pageable){	
+		return repository.findAll(pageable);
+	}
+
+ - localhos.... departmens?size=5&page=2
+
+  
+ * fazer configuracoes para mudar o padrao de paginas de onde comeca e qual sera o tamanho
+
+   - criar class e implementar class que ffaz as configuracoes de paginacao
+      @Configuration
+      public class TrabalhadorWebMvcConfigurer implements WebMvcConfigurer{
+ 
+   - metodo
+      @Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+	}
+
+   - fazer configurracoes
+     	PageableHandlerMethodArgumentResolver pageHandler = new PageableHandlerMethodArgumentResolver();
+		pageHandler.setFallbackPageable(PageRequest.of(1, 5));// pagina e tamanho
+		resolvers.add(pageHandler);
+    
+       

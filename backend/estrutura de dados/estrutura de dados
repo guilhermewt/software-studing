@@ -1,0 +1,13 @@
+* Algoritmo
+
+	- Um algoritmo é uma seqüência de passos que resolve algum problema ou alcança algum objetivo
+	- É importante salientar que um algoritmo simplesmente diz o que deve ser feito.
+	- A definicão de como os passos de um algoritmo serão executados é uma implementação do algoritmo.
+      Resumindo, algoritmo é o que deve ser feito e implementação é o como deve ser feito.
+    -  Um programa é a definição de como os passos de um algoritmo serão executados no computador.  
+    - Uma linguagem de programação é a maneira de “conversarmos” com um computador
+
+estrutura de dados
+ - É quem administrar conjuntos de dados, por exemplo um sistema de uma agenda de tarefas, quem vai fornecer as operacoes da agenda de estruturar os dados em ordem alfabetica,pesquisar, deletar, salvar é a estrutura de dados, como tambem podem servir apenas para agrupar os dados, para manipular os dados
+ 
+ 20

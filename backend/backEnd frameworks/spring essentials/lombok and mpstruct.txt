@@ -1,0 +1,56 @@
+
+
+C:\Users\guilherme\.m2\repository\org\projectlombok\lombok\1.18.24> da um cd no terminal depois rode o arquivo jar
+java -jar lombok-1.18.24.jar
+
+principais anotacoes 
+@Data "use ele quando a class tiver poucas associacoes e atributos"
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredAngsContructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of= {"id","nome"}) ou (exclude= {"id","nome"})
+@ToString
+
+(metodos de @builder)
+
+trabalha como uma alternatica ao dtos mas existe outra forma com mapstruct melhor essa se encaxaria com classes que tem poucos
+atributos
+
+- colocar @builder na class que vai criar ou @SuperBuilder
+- criar DepartmentPostRequestBody(DepartmentDTO) criar um pacote para requests e colocar dentro.criar para o put tambem, a diferencia 
+é que o post nao precisa de id pois o banco vai gerar automaticamente, mas no put precisamos pois vamos atualizar com o id
+- no metodo de post no service 
+    - return repository.save(Department.builder()
+				.name(departmentPostRequestBody.getName())
+				.build());
+    - no controller colocar tambem o departme..post
+
+    - metodo de update
+       Department savedDepartment = findByIdOrThrowResourceNotFoundException(departmentPutRequestBody.getId());
+
+		Department department = Department.builder()
+				.id(savedDepartment.getId())
+				.name(departmentPutRequestBody.getName())
+				.build();
+		repository.save(department);
+
+(mapstruct)
+
+ ele vai agilizar o processo de ter na hora de converter os dtos voce toda fazia 'obj.setName(objdto.getname)', agora ele faz 
+ isso automaticamente 
+
+- criar class DepartmentMapper e anota-la com
+     - @Mapper(componentModel = "spring")
+     
+     - instancia para poder-mos chamar esta class para converter e metodo de post e put
+        public static final DepartmentMapper INSTANCE = Mappers.getMapper(DepartmentMapper.class);
+        public abstract Department toDepartment(DepartmentPostRequestBody departmentPostRequestBody);
+
+     - classe de service metodo de post
+          -  return repository.save(DepartmentMapper.INSTANCE.toDepartment(departmentPostRequestBody));
+     
+     - classe de service metodo put
+ 

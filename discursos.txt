@@ -1,0 +1,163 @@
+0 webservices
+
+* interfaces,rede
+* conjunto,web
+* transferir
+* apenas fornece,particularidades
+* processo
+* como se comunicam
+   soap: http,representa dados,
+   rest: http,json,xml,xss
+
+ciclos de vida 
+
+* publicacao: fornecedor,existencia,repositorio
+* descoberta: conhecimento,pesquisando
+* descricao: expor api,client,interface,funcionalidades
+* invocacao: interacao, envio e recebime..
+
+BANCO DE DADOS 
+
+uma colecao de dados,onde os dados de um sistema sao armazenados e nesse local eu tenho toda uma estrutura de
+organizacao desses dados, onde eu possi usar para consultar dados de um produto, deletar um produto, 
+salvar um novo, atualizar, fazer pesquisas avancadas, lugar onde eu destino para salvar informacoes.
+ex.seus dados no facebook aonde ficam?
+
+
+SGBD
+
+sao conjunto de software e ferramentas que conecta o usuario e a base de dados, atravez dos sgbd que sao feitas as consultas
+,insercao de usuarios,deletar usuario, fazer pesquisas avancadas.Os sgds usam basicamente uma linguagem de programacao que é 
+o sql e é ela que contem toda logica para fazer as interacoes com o BD
+
+MODELAGEM DE DADOS
+
+determinar as tabelas que estarao no BD, seus relacionamentos
+
+COLUNAS LINHAS E TABELAS
+
+colunas: sao os campos da tabela que caracterizam os tipos de dados que deverao estar na tabela,nome de produto,numeros,datas ..
+
+linhas:um registro que contem todos dados de um usuario ,nome,idade,data de aniversario
+
+tebelas: conjunto de colunas e linhas
+
+SQL - structured query languagem
+
+linguagem de programacao para banco de dados
+criar,deletar....
+bd relacionai
+gerenciar premissoes e seguranca
+
+(CHAVE)
+ * chave primaria (pk) 
+   atributos que identifica unicamente um registro dentro de uma tabela,é uma forma de garantir que um registro nao seja 
+   duplicado sendo assim essa é a forma de pegar dados unicos em uma tabela
+
+ * chave composta
+   é quando dois campos formam uma chave primaria,pra efetuar um registro é preciso dois campos. 
+   - Em um sistema de um banco para
+     uma conta ser valida eu preciso ter o campo numero da agencia e numero da conta
+     (agencia = 3212,conta = 321)
+
+   - em sistama de cidades tenho que definir na tabela que o campo cidade e estado vao forma chave composta pois existem varios
+     estado e cidades (rio claro/sp) = chave composta nao pode se repetir (rio claro/rj) = chave composta nao pode repetir
+
+ * chave estrangeira
+   é quando há o relacionamento entre duas tabela. eu tenho a tabela funcionario e a tabela departamento. funcionario pertence a
+   um departmento, entao como faco para relacionar? por meio do id dos dois registros 
+   tabela funcionario:id_department,tabela department
+
+https://www.luis.blog.br/chave-primaria-simples-e-chave-primaria-composta.html
+
+
+(NOSQL)
+
+- sao bancos de dados nao relacionas,bancos que armazena dados atraves de arquivos ou registros e esses arquivos possuem uma chave de valor
+  que faz a identificacao de cada registro,entao todos seus tipos de dados sao alocados juntos em apenas um registro. Diferentemente dos bancos
+  de dados relacionais que contem seus dados armazenados atraves de tabelas ou seja cada tipo de dados tem sua propria tabela
+
+- eficiente em armazenar grandes volumes de dados
+- melhor performace e escabilidade horizontal
+
+-bd:documentos
+  * trabalha com dados nao estruturados orientados a documentos tem como principal virtude conter todos seus dados em um unico documento
+  * eficiente em blogs,posts,comentarios onde cada post tera uma grande carga de dados
+  
+  discusar:
+  - nao relacionais
+  - armazena arquivos e registros,chave valor
+  - tipos de dados
+  - diferente relacionais
+  - grandes volumes de dados
+  - escabilidade horizontal
+  
+  - documentos -> 
+    - dados nao estruturados,
+  	- dados mesmo arquivo
+  	- blogs,posts,comentarios
+  	
+
+(API)
+
+- conjuntos de metodos,
+  facilicam comunicacao e troca de informacao 
+
+- interface entre dois sistema que ambos
+  uma forma que terceiros...
+
+api google maps,lista de contatos
+
+- webservice web,todo webservice é uma api mas... 
+  	
+(API REST) 
+
+- transferencia de dados
+- rest:delimita algumas ...
+
+- 6 necessidades
+  client-server: separacao
+  stateless: todas informacoes
+  cacheable: sem resposta
+  leyered-system: um endpoint	
+  
+
+
+
+(SOLID)
+- sao principios que ajudam do desenvolvimento de software deixando esses software bem mais preparado para fazer atualizacoes, com facil                 
+ compreensao, manter por bastante tempo. Seguindo esses principios voce tera um sistema mais organizado e facil manutencao
+ 
+ pesquisa:https://medium.com/desenvolvendo-com-paixao/o-que-é-solid-o-guia-completo-para-você-entender-os-5-princípios-da-poo-2b937b3fc530
+
+poliformismo 
+
+pricipio 2 class super comportamento diferentes
+
+interfaces
+
+duas classes metodos comum
+implementar todos metodos
+contrato 
+ex automoveis
+
+classes abstrata
+
+nao instanciadas
+heranca total sub sim, super nao
+abstratada nao ter um objeto apartir
+sao importantes classe geral
+conta ex.
+
+
+https://url.baixarseriesmp4.xyz/x/cfef63a1997867f9cb126cddf8fae994
+ul nav nav-tabs
+li href"#infor..." data-toggle="tab"
+class"active
+------------------------------
+div tab-content
+
+div class"tab-pane id="inf...
+
+
+

@@ -1,0 +1,33 @@
+interfaces
+
+é quando duas classes possuem comportamentos comuns que podem ser separados em um outro local,
+entao dizemos que este local é uma interfaces e qualquer classe pode implementar ela em si.
+Então interfaces nada mais do que um cojunto de metodos que toda classe que implementa-la deve
+possuir se tornando em uma espécie de contrato quem quiser pegar algum metodo de uma interface
+obrigatoriamente se ela tiver muitos metodos terá que implementar todos em si.
+
+casses abstratas
+
+são classes que não podem ser instanciadas, voce não pode criar um objeto apartir dela,somente de
+suas sub-classes. É Quando queremos criar uma classe geral/modelo e esta não pode ser instanciada, ou 
+seja não posso criar um objeto apartir dela.
+
+Diferenças entre interfaces e classes abstratas
+
+* Interface definir um conjunto de metodos que outras classes devem implementar, apenas definimos o compor
+tamento padrão de um conjunto de classes que por ventura implementem esta interface.
+
+* Já classes abstratas servem para prover uma base para que as classes que herdarem não precisem se preocupar
+com o comportamento padrão, apenas com suas característica e comportamentos pessoais.
+
+* sempre que precisar-mos definir um conjunto de métodos que devem ser implementado por um grupo de classes 
+utilizem as interfaces.
+
+* se precisar-mos determinar uma classe base para outras classes,que herdarão seus atributos e métodos e esta 
+classe não deva ser instanciada, utilizamos as classes abstratas.
+
+* classe abstrata poder conter logica, já interfaces apenas defini métodos.
+
+
+
+exercicios:https://www.feg.unesp.br/Home/PaginasPessoais/profedsonluizfrancasenne/pc2-aula5-perguntas.pdf

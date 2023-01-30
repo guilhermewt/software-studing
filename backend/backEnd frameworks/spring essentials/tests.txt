@@ -1,0 +1,827 @@
+ (Spring Data JPA Test pt 01)
+
+- criar a class departmentRepository 
+  - @DataJpaTest
+    @DisplayName("test for department repository")
+
+  - @Test
+     void test(){} // pode testar
+
+  - vamos salvar um department
+
+  - @Autowired
+	private DepartmentRepository departmentRepository;
+
+  - private Department createDepartment() {
+		return Department.builder().name("informatica").build();0	
+	}
+
+  - 	@Test
+	@DisplayName("save creater Department when successful")
+	void save_persistDeparment_whenSuccessful(){ 
+		Department department = createDepartment(); //criar instancia
+		Department savedDepartment = this.departmentRepository.save(department); //salvar n DB
+	}
+
+  - dentro do save_...
+    
+      - 	Assertions.assertThat(departmentSaved).isNotNull(); //verificar o objeto salvo no banco nao é null
+		Assertions.assertThat(departmentSaved.getId()).isNotNull();// verificar se id do objeto salvo no banco nao é null
+		Assertions.assertThat(departmentSaved.getName()).isEqualTo(departmentToBeSaved.getName()); verificar se o getname do objeto salvo no banco é o mesmo 
+                que instanciamos
+
+(Spring Data JPA Test pt 02)
+
+ * criar novo metodo para update
+   - @Test
+     @DisplayName("update Department when successful")
+     void save_updateDeparment_whenSuccessful(){
+
+ * primeiro salvar algo para depois atualizar
+
+    - Department departmentToBeSaved = createDepartment();
+      Department departmentSaved = this.departmentRepository.save(departmentToBeSaved);
+
+ * atualizar:
+    - departmentSaved.setName("tecnologia");
+      Department departmentUpdate = this.departmentRepository.save(departmentSaved);
+
+ * tests:
+    - Assertions.assertThat(departmentUpdate).isNotNull();
+      Assertions.assertThat(departmentUpdate.getId()).isNotNull();
+      Assertions.assertThat(departmentUpdate.getName()).isEqualTo(departmentSaved.getName());
+
+ * na duvida pode fazer um log
+    - log.info(deparmentUpdated.getName())
+    - @log4j2
+
+
+ * metodo delete
+   
+   - criar novo metodo para update
+     - @Test
+       @DisplayName("delete Department when successful")
+       void save_updateDeparment_whenSuccessful(){
+
+   - deletar e testar
+      - this.departmentRepository.delete(departmentSaved);
+	Optional<Department> departmentOptional = this.departmentRepository.findById(departmentSaved.getId());
+	Assertions.assertThat(departmentOptional).isEmpty();
+
+
+ * metodo de retorna lista de name
+
+     - nome
+        @Test
+	@DisplayName("find by name Return list of anime when successufull")
+	void findByName_ReturnsListofAnime_whenSuccessfull() {
+
+     - salvar
+         Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
+         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+     
+     - buscar e testar
+         String name = animeSaved.getName();
+	 List<Anime> animes = this.animeRepository.findByName(name);
+	  Assertions.assertThat(animes).isNotEmpty().contains(animeSaved);
+
+  * test para ver se a lista esta retornando vazio quando nao existir
+      - nome
+          @Test
+	  @DisplayName("find by name Return empty list when no anime is found")
+	  void findByName_ReturnsListEmpty_whennoAnimeIsNotFound() {
+      
+      - colocar nome invalido e fazer buscar e testar se esta retornando
+        vazia.
+          List<Anime> animes = this.animeRepository.findByName("xaxa");
+	  Assertions.assertThat(animes).isEmpty();   
+
+  * antes de fazer commit jpa 2 vamos adicionar um campo findbyName do department
+
+(Spring Data JPA Test pt 03 - Exceções)
+
+ * @Test
+   @DisplayName("save ThrowConstraintViolationException when Department is empty")
+
+ * void save_ThrowsConstraintViolationException_whenNameIsEmpty(){ 
+   Department department = new Department();
+
+ * sao dois jeitos de fazer
+ 
+    - primeiro
+      - Assertions.assertThatThrownBy(() -> this.departmentRepository.save(department))
+		  .isInstanceOf(ConstraintViolationException.class); //esta excessao é lançada por  
+
+    - segundo
+      - Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+		  .isThrownBy(() -> this.departmentRepository.save(department))
+		   .withMessageContaining("the department name cannot be empty");
+
+      
+ (Unit Tests pt 01)
+ 
+* criar class de controller
+  -  esta anotacao usar o spring com junit para rodar é bem mais rapido assim
+     @ExtendWith(SpringExtension.class)
+     public class DepartmentResourceTest {  
+
+* criar as instancias
+
+  - @injectMocks: é usado para qual classe voce vai usar para testar	
+       @InjectMocks
+	private DepartmentResource departmentResource;    
+
+  - @Mocks: é usado para todas as classes que estao dentro de injectMocks
+    - dentro da classe service por exemplo eu tenho uma outra class e assim por diante
+      o mock serve para eu definir um comportamento padrao da class;
+     
+        @Mock
+	private DepartmentService departmentServiceMock;
+
+* criar  o comportamento do mock
+  - nova class departmentCreator packutil. Esta classe vai servi para criar as instacias pois estamos testando
+    apenas a class controlle nao mexemos no banco de dados
+
+
+  - metodos: salvar ,salvar com id,atualizar
+    
+       public static Department createDepartmentToBeSaved() {
+		return Department.builder().name("informatica").build();
+	}
+	
+	public static Department createValidDepartment() {
+		return Department.builder().name("informatica").id(1l).build();
+	}
+	
+	public static Department createValidUpdateDepartment() {
+		return Department.builder().name("informatica 2").id(1l).build();
+	}
+
+   - mudar a class departmentRepository: tirar a instancia local para os do  pacote util
+      - DepartmentCreator.createDepartmentToBeSaved();
+
+  
+   - vamos  definir o que o metodo findAll vai retornar, isso tem que ser feito antes de tudo
+     
+      - criar metodo antes de tudo depois da declaracao de atributos
+        @BeforeEach
+	  void setUp() { 
+	}
+    
+      - dentro do metodo, retorna  o objeto ja criado
+        PageImpl<Department> departmentPage = new PageImpl<>(List.of(DepartmentCreator.createValidDepartment()));
+
+      - quando alguem executar uma chamada para o listAll nao importando o conteudo, eu quero que retorne department
+        page
+
+        BDDMockito.when(departmentServiceMock.findAll(ArgumentMatchers.any())).thenReturn(departmentPage);
+
+
+   - criar metodo:
+    	- @Test
+	  @DisplayName("List return list of department inside page object when successful")
+	    void list_ReturnsListOfDepartmentInsidePageObject_whenSuccessful() {
+	  }
+
+        - uma variavel ja esperada, e outra para ver se esta salvo
+          
+           String expectedName = DepartmentCreator.createValidDepartment().getName();
+	   Page<Department> departmentPage = departmentResource.findAll(null).getBody();
+
+        - Assertions.assertThat(departmentPage).isNotNull();
+	  Assertions.assertThat(departmentPage.toList()).isNotEmpty().hasSize(1);
+	  Assertions.assertThat(departmentPage.toList().get(0).getName()).isEqualTo(expectedName);
+
+ (Unit Tests pt 02)
+   
+  * test do listAllnonPageable
+   
+    - se nao criou crie um metodo simples que retorne listAll "listAllNonPageable"     
+
+    - criar o mock
+      BDDMockito.when(departmentServiceMock.listAllNonPageable())
+      .thenReturn(List.of(DepartmentCreator.createValidDepartment())); 
+
+    - @Test
+	@DisplayName("ListAll return list of department when successful")
+	void listAll_ReturnsListOfDepartment_whenSuccessful() {
+
+    - String expectedName = DepartmentCreator.createValidDepartment().getName();
+      List<Department> department = departmentResource.listAll().getBody(); 
+
+    - Assertions.assertThat(department).isNotNull().isNotEmpty().hasSize(1);
+      Assertions.assertThat(department.get(0).getName()).isEqualTo(expectedName);
+ 
+ * test do findbyIdOr...
+
+    - BDDMockito.when(departmentServiceMock.findByIdOrThrowResourceNotFoundException(ArgumentMatchers.anyLong()))
+      .thenReturn(DepartmentCreator.createValidDepartment());
+ 
+    - @Test
+      @DisplayName("findById return department when successful")
+      void findById_ReturnsDepartment_whenSuccessful() {
+
+    - Long expectedId = DepartmentCreator.createValidDepartment().getId();	
+      Department department = departmentResource.findById(1).getBody();
+
+    - Assertions.assertThat(department).isNotNull();
+      Assertions.assertThat(department.getId()).isNotNull().isEqualTo(expectedId);
+
+ * findName
+
+    - BDDMockito.when(departmentServiceMock.findByName(ArgumentMatchers.anyString()))
+      .thenReturn(List.of(DepartmentCreator.createValidDepartment()));
+
+    - @Test
+	@DisplayName("findByName return list of department when successful")
+	void findByName_ReturnsDepartment_whenSuccessful() {
+
+    - String expectedName = DepartmentCreator.createValidDepartment().getName();
+      List<Department> department = departmentResource.findByName("informatica").getBody();
+
+    - Assertions.assertThat(department).isNotNull().isNotEmpty().hasSize(1);
+
+    - Assertions.assertThat(department.get(0).getName()).isEqualTo(expectedName);
+
+ 
+ * findName empty
+
+  - @Test
+    @DisplayName("findByName return an empty list of department when name is not found")
+    void findByName_ReturnsEmptyListOfDepartment_whenDepartmentIsNotFound() {
+
+  - BDDMockito.when(departmentServiceMock.findByName(ArgumentMatchers.anyString()))
+    .thenReturn(Collections.emptyList());
+
+  - List<Department> department = departmentResource.findByName("informatica").getBody();
+    Assertions.assertThat(department).isNotNull().isEmpty();
+
+ * save ****
+
+  - BDDMockito.when(departmentServiceMock.insert(ArgumentMatchers.any(DepartmentPostRequestBody.class)))
+    .thenReturn(DepartmentCreator.createValidDepartment());
+ 
+  - criar uma class de instanciar 'DepartmentPostRequestBodyCreator'
+
+  - public static DepartmentPostRequestBody createDepartmentPostRequestBody() {
+		return DepartmentPostRequestBody.builder()
+				.name(DepartmentCreator.createDepartmentToBeSaved().getName())
+				.build();
+    }
+
+  - @Test
+    @DisplayName("save return department when successful")
+    void save_ReturnsDepartment_whenSuccessful() {
+
+  - Department department = departmentResource.insert(DepartmentPostRequestBodyCreator.createDepartmentPostRequestBody()).getBody();
+    Assertions.assertThat(department).isNotNull().isEqualTo(DepartmentCreator.createValidDepartment());
+
+* update
+
+  - criar uma class de instanciar 'DepartmentPutRequestBodyCreator'
+
+  - public static DepartmentPutRequestBody createDepartmentPutRequestBody() {
+		return DepartmentPutRequestBody.builder()
+				.id(DepartmentCreator.createValidUpdateDepartment().getId())
+				.name(DepartmentCreator.createDepartmentToBeSaved().getName())
+				.build();
+	}
+
+  - nao retorne nada quando departmentservi.. update for chamado
+
+     BDDMockito.doNothing().when(departmentServiceMock).update(ArgumentMatchers.any(DepartmentPutRequestBody.class));
+
+  - @Test
+	@DisplayName("replace update department when successful")
+	void replace_UpdateDepartment_whenSuccessful() {
+
+  - /*primeiro jeito*/
+    Assertions.assertThatCode(() -> departmentResource.update(DepartmentPutRequestBodyCreator.createDepartmentPutRequestBody()))
+    .doesNotThrowAnyException();
+
+  - /*segundo jeito*/
+    ResponseEntity<Void> entity = departmentResource.update(DepartmentPutRequestBodyCreator.createDepartmentPutRequestBody());
+    Assertions.assertThat(entity).isNotNull();
+    Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+* delete
+
+  - BDDMockito.doNothing().when(departmentServiceMock).delete(ArgumentMatchers.anyLong());
+
+  - @Test
+    @DisplayName("delete removes department when successful")
+    void delete_RemovesDepartment_whenSuccessful() {
+
+  - /*primeiro jeito*/
+    Assertions.assertThatCode(() -> departmentResource.delete(1))
+    .doesNotThrowAnyException();
+
+  - /*segundo jeito*/
+    ResponseEntity<Void> entity = departmentResource.delete(1);		
+    Assertions.assertThat(entity).isNotNull(); 
+    Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+(junit test part 3)
+
+ - criar class departmentServiceTest e colar departmentresource vai ser basicamente a mesma coisa
+
+ * atributos
+
+   - @InjectMocks
+	private DepartmentService departmentService;
+	
+	@Mock
+	private DepartmentRepository departmentRepositoryMock;
+
+ * beforeEach
+
+   - 	PageImpl<Department> departmentPage = new PageImpl<>(List.of(DepartmentCreator.createValidDepartment()));
+		BDDMockito.when(departmentRepositoryMock.findAll(ArgumentMatchers.any(PageRequest.class))).thenReturn(departmentPage);
+		
+		BDDMockito.when(departmentRepositoryMock.findAll())
+		.thenReturn(List.of(DepartmentCreator.createValidDepartment()));
+		
+		BDDMockito.when(departmentRepositoryMock.findById(ArgumentMatchers.anyLong()))
+		.thenReturn(Optional.of(DepartmentCreator.createValidDepartment()));
+		
+		BDDMockito.when(departmentRepositoryMock.findByNameContainingIgnoreCase(ArgumentMatchers.anyString()))
+		.thenReturn(List.of(DepartmentCreator.createValidDepartment()));
+		
+		BDDMockito.when(departmentRepositoryMock.save(ArgumentMatchers.any(Department.class)))
+		.thenReturn(DepartmentCreator.createValidDepartment());
+		
+		BDDMockito.doNothing().when(departmentRepositoryMock).delete(ArgumentMatchers.any(Department.class));
+		  
+    
+    - no metodos onde estiver departmentResourceMock mude para DepartmentRepository e onde estiver 
+      departmentResource mude para departmentService
+
+    - nos metodos de update e delete exclua os responseEntity pois nao da para retorna no service
+
+    - no metodo que retorna um page no lugar de null coloque: PageRequest.of(1, 1)
+
+* no metodo findbyid ele retorna um badrequest caso nao encontre o id é isso que vamos fazer criar 
+  um metodo para retonar este error caso nao encontre
+
+    - 	@Test
+	@DisplayName("findByIdOrThrowResourceNotFoundException throw  ResourceNotFoundException when department is not found")
+	void findByIdOrThrowResourceNotFoundException_throwResourceNotFoundException_WhenDepartmentIsNotFound() {
+
+    -   BDDMockito.when(departmentRepositoryMock.findById(ArgumentMatchers.anyLong()))
+		.thenReturn(Optional.empty());
+
+    -   Assertions.assertThatExceptionOfType(BadRequestException.class)
+        .isThrownBy(() -> departmentService.findByIdOrThrowResourceNotFoundException(1));
+
+(Testes de Integração pt 01)
+   
+   - vamoms rodar os test no mais proximo de uma aplicacao rodando em producao
+
+   - package=integration 
+      @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //rodar em uma porta diferente
+      @AutoConfigureTestDatabase //usar o banco em memoria
+      public class DepartmentControllerIT {
+
+   - @Autowired
+	private TestRestTemplate testRestTemplate; 
+	
+	@LocalServerPort
+	private int port;
+
+        @Autowired
+	private DepartmentRepository departmentRepository;
+
+   * metodo pageable
+     como nao tem como nos criar um page padrao vamos ter que criar uma classe especifica
+
+     - criar um package 'wrapper' e uma classe 'PageableResponse<T>' para configurar a paginacao copiar as configuracoes
+
+     -  @Test
+	@DisplayName("List return list of department inside page object when successful")
+	void list_ReturnsListOfDepartmentInsidePageObject_whenSuccessful() {
+
+     - Department savedDepartment = departmentRepository.save(DepartmentCreator.createDepartmentToBeSaved());
+       String expectedName = savedDepartment.getName();
+
+     - PageableResponse<Department> departmentPage = testRestTemplate.exchange("/departments", HttpMethod.GET,null,
+				new ParameterizedTypeReference<PageableResponse<Department>>() {
+				}).getBody();
+
+     - Assertions.assertThat(departmentPage).isNotNull();
+       Assertions.assertThat(departmentPage.toList()).isNotEmpty();
+       Assertions.assertThat(departmentPage.toList().get(0).getName()).isEqualTo(expectedName);
+
+(Testes de Integração pt 02)
+ -  para agilizar os test criar um pack'resources dentro de test arquivo 'logback-test.xml', pesquisa logback no google do site
+    baeldung e copiar os arquivos xml configuration
+
+ * listAllnonpageable
+
+   - @Test
+	@DisplayName("ListAll return list of department when successful")
+	void listAll_ReturnsListOfDepartment_whenSuccessful() {
+
+   -  Department savedDepartment = departmentRepository.save(DepartmentCreator.createDepartmentToBeSaved());
+      String expectedName = savedDepartment.getName();
+
+   - List<Department> department = testRestTemplate.exchange("/departments/all", HttpMethod.GET,null,
+				new ParameterizedTypeReference<List<Department>>() {
+				}).getBody();
+
+   - Assertions.assertThat(department).isNotNull().isNotEmpty();
+     Assertions.assertThat(department.get(0).getName()).isEqualTo(expectedName);
+
+
+ * findbyId
+ 
+   - Department savedDepartment = departmentRepository.save(DepartmentCreator.createDepartmentToBeSaved());
+     Long expectedId = savedDepartment.getId();
+
+   - Department department = testRestTemplate.getForObject("/departments/{id}", Department.class, expectedId);
+
+   - Assertions.assertThat(department).isNotNull();
+     Assertions.assertThat(department.getId()).isNotNull().isEqualTo(expectedId);
+
+ * findByName 
+
+   - @Test
+	@DisplayName("findByName return list of department when successful")
+	void findByName_ReturnsDepartment_whenSuccessful() {
+
+   -   String expectedName = DepartmentCreator.createValidDepartment().getName();
+       String url = String.format("/departments/find?name=%s", expectedName);
+
+   -    List<Department> department = testRestTemplate.exchange(url, HttpMethod.GET,null,
+				new ParameterizedTypeReference<List<Department>>() {
+				}).getBody();
+
+   - Assertions.assertThat(department).isNotNull().isNotEmpty();
+     Assertions.assertThat(department.get(0).getName()).isEqualTo(expectedName);
+
+ * findByName_ReturnsEmptyListOfDepartment
+
+   - @Test
+	@DisplayName("findByName return an empty list of department when name is not found")
+	void findByName_ReturnsEmptyListOfDepartment_whenDepartmentIsNotFound() {
+
+   -  List<Department> department = testRestTemplate.exchange("/departments/find?name=cpu", HttpMethod.GET,null,
+				new ParameterizedTypeReference<List<Department>>() {
+				}).getBody();
+
+   - Assertions.assertThat(department).isNotNull().isEmpty();
+
+
+ * save
+ 
+   -  @Test
+	@DisplayName("save Return Autor whenSuccessful")
+	void save_ReturnAutor_whenSuccessful() {
+
+   - repositoryUser.save(USER);
+     AutorPostRequestBody autorPostRequestBody = AutorPostRequestBodyCreator.createAutorPostRequestBodyCreator();
+     ResponseEntity<Autor> entityAutor = testRestTemplateRoleUser.postForEntity("/autores", autorPostRequestBody, Autor.class);
+
+   - Assertions.assertThat(entityAutor).isNotNull();
+     Assertions.assertThat(entityAutor.getBody()).isNotNull();
+     Assertions.assertThat(entityAutor.getBody().getId()).isNotNull();
+     Assertions.assertThat(entityAutor.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+
+ * update
+
+   - @Test
+	@DisplayName("replace update department when successful")
+	void replace_UpdateDepartment_whenSuccessful() {
+
+   - Department savedDepartment = departmentRepository.save(DepartmentCreator.createDepartmentToBeSaved());
+     savedDepartment.setName("new department");
+
+   - ResponseEntity<Void> departmentResponseEntity = testRestTemplate.exchange("/departments/", HttpMethod.PUT,
+				new HttpEntity<>(savedDepartment),Void.class);
+
+   - Assertions.assertThat(departmentResponseEntity).isNotNull();
+     Assertions.assertThat(departmentResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+ 
+  * delete
+  
+  - @Test
+	@DisplayName("delete removes department when successful")
+	void delete_RemovesDepartment_whenSuccessful() {
+
+  -  Department savedDepartment = departmentRepository.save(DepartmentCreator.createDepartmentToBeSaved());
+
+  -  ResponseEntity<Void> departmentResponseEntity = testRestTemplate.exchange("/departments/admin/{id}", HttpMethod.DELETE,
+				null,Void.class,savedDepartment.getId());
+
+  -  Assertions.assertThat(departmentResponseEntity).isNotNull();
+     Assertions.assertThat(departmentResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+		
+  
+
+
+
+  *  se da error ao executar toda a classe
+
+ -  ao executar todo o test ele vai falhar pois autoConfigura... nao apaga o banco depois de executado, dai quando o segundo metodo
+    roda ele acaba rolando um conflito pois ja existe um banco e o meu metodo quer criar outro,entao a solucao é colacar a anotacao
+    "@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)" na assinatura do metodo, sendo assim toda vez que um metodo for executado ele meio que deixa o banco sujo, logo apos o spring
+    vendo isso ele vem apagaa todo o banco
+
+(Testes de Integração com Spring Security)
+
+testRestTemplate nao esta configurado para receber seguranca, temos criar um novo testRestTemplate dentro da class, 
+mas adicionando as configuraçoes
+que queremos
+
+ - configurar
+   @TestConfiguration
+	static class Config {
+
+ - @Bean(name = "testRestTemplateRoleUser") // mostrar para o spring que a nova class de TesrestTempla..
+   public TestRestTemplate testRestTemplateRoleUserCreator() {
+
+ - criar autenticacao como se fosse no postman
+    RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
+		     .basicAuthentication("trabalhador2 academy", "trabalhador");
+   
+ - return new TestRestTemplate(restTemplateBuilder);
+
+ - mostrar onde esta o novo bean que criamos
+
+        @Autowired
+	@Qualifier(value = "testRestTemplateRoleUser")
+	private TestRestTemplate testRestTemplate;
+
+ - vamos definir a class Config como @Lazy para o sistema carrega a port primeiro para depois definir a url 
+      public TestRestTemplate testRestTemplateRoleUserCreator(@Value("${local.server.port}") int port) {
+              .rootUri("http://localhost:" + port)
+
+
+ * definir um usuario
+ 
+   - @Autowired
+	private WorkerRepository workerRepository;
+
+   - private static final Worker USER= WorkerCreator.createWorkerUSER_ToBeSaved();
+   
+   - private static final Worker ADMIN = WorkerCreator.createWorkerADMIM_ToBeSaved();
+
+   - lembrando de colocar o password criptografado
+
+   - nos antes de comeca executar: 
+         workerRepository.save(USER); // ou admin dependendo da prioridade
+
+   - duplicar as configuracoes do testRestTem... só que agora com as configuracoes de autenticacoes de ADMIN
+
+   - 	@Bean(name = "testRestTemplateRoleAdmin")
+		public TestRestTemplate testRestTemplateRoleAdminCreator(@Value("${local.server.port}") int port) {
+                	.basicAuthentication("guilherme2", "trabalhador");
+
+   - renomear a variavel testRestTemplate para testRestTemplateRoleUser e fazer outra só que com o admin
+  
+     @Autowired
+	@Qualifier(value = "testRestTemplateRoleAdmin")
+	private TestRestTemplate testRestTemplateRoleAdmin;
+
+
+   - criar um novo metodo para retorna um forbbiden quando o usuario nao for um admin e esta tentando excluir(vai ter as
+     mesmas configuracoes de delete mas com  o resttemplant em USER)
+
+       @Test
+	@DisplayName("delete Return 403 when User Is Not Admin")
+	void delete_Return403_whenUserIsNotAdmin() {
+          * workerRepository.save(USER);
+  	  * ResponseEntity<Void> departmentResponseEntity = testRestTemplateRoleUser.exchange("/departments/admin ....
+          * Assertions.assertThat(departmentResponseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+
+
+ERROR
+
+JSON parse error: Cannot deserialize value of type `java.lang.String` from Array value (token `JsonToken.START_ARRAY`); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.lang.String` from Array value (token `JsonToken.START_ARRAY`)
+    
+(Maven Profile Para Testes de Integração)
+
+- se rodar o test na linha de comando(mvn test) ele vai falhar pois a class ProjetoTrabalhorApplicationTests esta configurado para rodar
+o contexto e o contexto espera o banco de dados entao é preciso configurar
+
+- temos que comenta a class 'ProjetoTrabalhorApplicationTests' as anotacoes
+
+- se roda o test na linha de comando ele vai pegar apenas todos tests menos o de integracao
+
+- definir qual test irá rodar no geral pela linha de comando 'mvn test'.
+
+       <profiles>
+		<profile>
+			<id>integration-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+						  <includes>
+						    <include>**/*IT.*</include>
+						  </includes>		
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>   
+
+ - mvn test -Pintegration-tests
+
+ - se quiser rodar todos tests <include>**/*test.*</include>
+
+_______________________________________________________________________________________
+projeto biblioteca
+
+
+
+(ERROR DO getAuthorities resolvido com @JsonProperty("roles")
+
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `org.springframework.security.core.GrantedAuthority` 
+(no Creators, like default constructor, exist): abstract types either need to be mapped to concrete types, have custom deserializer, or contain additional type information
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 711] 
+(through reference chain: com.biblioteca.wrapper.PageableResponse["content"]->java.util.ArrayList[0]->com.biblioteca.entities.Usuario["authorities"]->java.util.ArrayList[2])
+
+(ERROR NO mvn test)
+atualizar o java para 11 no pom.xml
+colocar as os path no plugin do lombok e project.lombok
+usar como referencia o projeto spring essentials
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.0</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.spring-boot-essentials</groupId>
+	<artifactId>spring-boot-essentials</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-boot-essentials</name>
+	<description>Spring Boot curso devDojo</description>
+
+	<properties>
+		<java.version>11</java.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-data-rest</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-security</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>integration-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${maven-surefire-plugin.version}</version>
+						<configuration>
+							<includes>
+								<include>**/*IT.*</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.24</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId> lombok-mapstruct-binding</artifactId>
+							<version>0.1.0</version>
+						</path>
+
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+_________________________________________________________________________________________________
+
+   

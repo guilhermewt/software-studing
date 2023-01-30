@@ -1,0 +1,38 @@
+pesquisas:
+https://www.zup.com.br/blog/spring-boot
+
+https://medium.com/equals-lab/15-boas-práticas-para-desenvolvimento-de-aplicações-com-spring-boot-953e0ff2e24f
+
+- spring boot facilita a etapa de criacao e configuracao do projeto sendo assim ao comecar um projeto nao temos que lidar com arquivos xml e depen
+dencias pois o spring ja traz um projeto configurado, entao o spring traz configuracoes padroes de servidores(tomcat), gerenciamento de dependencias
+configuracoes de bibliotecas,Métricas & health checks;
+
+- o spring usa o conceito de convencao sobre configuracao,isso significa que o spring toma decisoes por nois com base em convencoes, configurando o projeto em configuracoes padroes.
+
+- o spring nao é totalmente default, mesmo ele configurando o projeto, ele ainda deixa trocar as configuracoes como trocar o tomcat por outro servidor
+
+- umas das melhores coisas que o spring tem é que nao é mais preciso fazer configuracoes pelos arquivos xmls, agora é por meio de forma programatica
+por anotacoes
+
+modulos:
+
+spring boot
+ - modulo principal do projeto que ajuda na integracao dos outros
+ 
+Spring Boot Starters
+ - sao dependencias que gerenciam outras dependencias, sendo assim eu tenho apenas um arquivo de dependencias e este gerenciam todas as outras,sendo assim dentro do arquivo dependencies eu chamo apenas o start e internamente ele encapsula as dependencias necessarias para usar este modulo
+
+spring boot starters web
+ - configuracoes para trabalhar na web trazendo o padrao rest, spring mvc e servidor tomcat 
+
+spring boot starters test 
+ - traz configuracoes de dependencias para realizar testes,nisso consta o mockito,assertJ,Junit,Hamcrest
+ 
+spring boot starters Data jpa  
+ - traz as dependencias de persistencias,abstracao do bd, queries,criacao de repositorios
+ 
+ spring boot
+ Spring Boot Starters
+ spring boot starters web
+ spring boot starters test 
+ spring boot starters Data jpa  

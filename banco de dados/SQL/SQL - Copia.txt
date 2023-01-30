@@ -1,0 +1,574 @@
+
+++++++======parei no left join 201
+
+(select)
+SELECT * FROM person.person;
+SELECT FirstName from person.person;
+SELECT LastName from person.person;
+SELECT * FROM person.EmailAddress;
+
+(DISTINCT)
+ pegar apenas nomes unicos sem repeticao
+SELECT DISTINCT LastName FROM person.person;
+
+(OPERADORES)
+ =, >, <, >=, <=, '<> diferente', 'and e', 'OR ou'
+
+
+(WHERE)
+sintax: SELECT table FROM column WHERE condicao;
+  
+   * SELECT * FROM person.person WHERE LastName = 'miller' and FirstName = 'anna';
+  
+   * SELECT * FROM Production.Product WHERE Color = 'Black' or color = 'blue';
+  
+   * SELECT * FROM Production.Product WHERE ListPrice > 1500 and ListPrice < 5000;
+
+*desafio -> 'a equipe de producao de produtos precisa do nome de todas as pecas que pesam mais que 500kg mas nao mais que 700kg para inspecao
+	
+	*select Name from Production.product where weight >= 500 and weight <= 700;
+
+*desafio -> foi pedido pelo marketing uma relacao de todos os empregados que sao casados e a assalariados
+        *select * from HumanResources.Employee where MaritalStatus = 'm' and SalariedFlag = 1;
+
+*desafio -> um usuario chamado Peter Krebs esta devendo um pagamento, consiga o email dele para que possamos enviar uma cobranca
+	*select  * from person.person where LastName = 'Krebs' and FirstName = 'Peter';
+	*select * from person.EmailAddress where BusinessEntityID = '26';
+
+(COUNT)
+ * SELECT count(*) from person.person // ou count(title),count(Distinct title)
+ 
+ * desafio -> quantos produtos temos cadastrados em nossa tabela de produtos
+(production.product)
+    - select count(*) from Production.Product;
+ * desafio -> quantos tamanhos de produtos unicos temos cadastrado em nossa tabela
+    - select count (DISTINCT Size) from Production.product;
+i stop desafios 38:00
+
+(TOP -> os primeiros 10)
+ * SELECT TOP 10 * FROM Production.product // retorna os primeiro 10
+
+(ORDER BY)
+ * select top 100 FirstName from person.person ORDER BY FirstName asc;
+ 
+ * select LastName from person.Person ORDER BY LastName desc;
+ 
+ * desafio obter o productId dos produtos mas caros cadastrados no sistema,listando do mais caro para o mais barato;
+   
+   - SELECT TOP 10 productId,ListPrice 
+     from Production.product 
+     ORDER BY listprice desc;
+ 
+* obter o nome e numero do produto dos produtos que tem o productID entre 1~4 do menor para o maior
+   
+   - SELECT TOP 4 Name,ProductNumber 
+     from Production.Product
+     ORDER BY ProductID asc;
+
+* 
+(BETWEEN)
+ * SELECT * FROM Production.Product
+   WHERE ListPrice BETWEEN 1500 AND 2000;
+ 
+ * SELECT * FROM Production.Product
+   WHERE ListPrice NOT BETWEEN 1500 AND 2000;
+ 
+ * SELECT * FROM HumanResources.Employee
+   WHERE HireDate BETWEEN '2009/01/01' AND '2010/01/01';
+
+(BETWEEN 'IN')
+ 
+  * usamos In junto com WHERE,para verificar se um valor correspodem com qualquer valor passado na lista de valores
+  
+  - valor in (valor1,valor2),valor in (SELECT valor FROM nomeDaTabela)
+  
+  - SELECT * FROM Person.Person
+    WHERE BusinessEntityID IN (2,7,13);
+  
+  - SELECT * FROM Person.Person
+    WHERE BusinessEntityID NOT IN (2,7,13);  // NOT
+
+(LIKE)
+  
+  consulta com incompleta "nao sei o nome todo só uma parte"
+  - +final+ select * form Person.person where firstname like '%to' 
+    +antes+ select * form Person.person where firstname like 'to%' 
+    +meio+ select * form Person.person where firstname like '%to%'
+    +limite+ select * form Person.person where firstname like 'ro_' so mais um caractere depois do to 
+    ex:(aeron,cameron,etc)
+
+(sum,avg,min,max)
+
+ - select top 10 sum(linetotal) as "soma" from Sales.SalesOrderDetail;
+ - select top 10 min(linetotal) as "minimo" from Sales.SalesOrderDetail;
+ - select top 10 max(linetotal) as "maximo" from Sales.SalesOrderDetail;
+ - select top 10 avg(linetotal) as "media" from Sales.SalesOrderDetail;
+
+(GROUP BY)
+
+ - select specialOfferID, sum(UnitPrice) from Sales.SalesOrderDetail group by SpecialOfferID;
+   
+   na pratica é assim
+   select specialOfferID,UnitPrice from Sales.SalesOrderDetail WHERE SpecialOfferID = 9;
+
+ - --vamos dizer que eu quero saber quantos cada produto foi vendido ate hoje
+   select productID, count(productID) as 'count productID'from Sales.SalesOrderDetail group by ProductID;
+
+ - vamos dizer que eu quero saber quantos nomes de cada nomes temos cadastrado emm nosso banco de dados
+   select FirstName,count(firstName) from Person.Person group by FirstName;
+
+ - na tabela production.product eu quero saber a media de preco para os produtos que sao pratas(silver)
+   select color,avg(listPrice) from Production.Product where color = 'silver' group by color;
+
+(HAVING)
+
+O having é basicamente muito usado em juncao com o group by para facilitar
+resultados de um agrupamento.
+
+de uma forma mais simples eu gosto de entender ele como basicamente um where para 
+dados agrupados.
+
+SELECT coluna1,funcaoAgregacao(coluna2)
+from nomeTabela Group By coluna1 having condicao;
+
+A grande diferenca entre HAVING E WHERE. É que o having é aplicado depois que os dados já foram agrupados, 
+enquanto o WHERE é aplicado antes dos dados serem agrupados.
+
+- vamos dizer que queremos saber quais nomes no sistema tem ocorrencia maios que 10 vezes
+
+  select firstame, count(firstName) as 'quantidade' from person.person group by firstName
+  having count(firstName) > 10
+
+- queremos saber quais produtos que no total de vendas estao entre 162k a 500k
+  Select productid,sum(linetotal) as 'total'from sales.salesOrderDetail GROUP BY productID
+  having sum(lineTotal) between 162000 and 500000
+
+- voce quer saber quais nomes no sistema tem um ocorrencia maior que 10 vezes, porem somente onde
+  o titulo é 'Mr'
+  select firstName, count(firstName) as 'quantidade' from person.person WHERE title = 'Mr' group by
+  firstName having count(firstName) > 10
+
+(AS)
+
+definir um nome na hora da pesquisa ex. eu tenho uma tabela que se chama price, mas na minha pesquisa
+eu usar um nome da tabela em portugues -> as 'price'
+
+ - encontrar o firstname e lastname person.person
+   select firstName as 'nome', LastName as 'sobrenome' from Person.Person;
+
+ - productNumber da tabela production.product 'numero do produto'
+   select ProductNumber as 'numero do producto' from Production.Product;
+
+ - sales.salesOrderDetail unitPrice 'preco unitario'
+   select UnitPrice as 'numero do producto' from Sales.SalesOrderDetail;
+
+(INNER JOIN)
+
+ junta informacao atravez de duas tabelas, por meio da associacao entre a forekey
+ eu quero os dados de cliente e do seu endereco, mas eu nao tenho o endereco apenas
+ sua referencia(forekey). Entao o inner join faz essa associacao e contudo eu posso
+ exibir os dados de cliente e endereco
+
+- eu quero BusinessEntityID,firstname,lastname,e email da pessoa na tabela pessoa
+  eu tenho apenas o first e lastn, o email esta em outra tabela(person.emailAdress).
+  entao traga esses dados das duas tabelas,verificando onde esta a coluna em comum
+  entre as duas tables
+
+   * select p.BusinessEntityID,p.FirstName,p.LastName,pe.EmailAddress from person.person p 
+     inner join person.EmailAddress pe on p.BusinessEntityID = pe.BusinessEntityID
+
+ - eu quero nome dos produtos e informacoes de suas categorias (listprice,nome produto,nome
+   subcategoria)  tabelas: production.product / production.subcategorias
+
+   select p.Name as 'productname',p.ListPrice,ps.Name as 'subcategory name' from Production.Product as p
+inner join Production.ProductSubcategory ps on p.ProductSubcategoryID = ps.ProductSubcategoryID;
+
+ - eu quero Name,BusinessEntityId,PhoneNumberTypeId,PhoneNumber entra as tabelas (Person.PhoneNumberType,Person.PersonPhone)
+   select pn.Name,pp.BusinessEntityID,pp.PhoneNumberTypeID, pp.PhoneNumber from person.PhoneNumberType AS PN
+   inner join Person.PersonPhone pp on PN.PhoneNumberTypeID = pp.PhoneNumberTypeID   
+
+ - eu quero addressId,City,StateProvinceId,Nome do estado (person.stateprovince,person.addressId)  
+   select ps.StateProvinceID,ps.Name,pa.AddressID,pa.City  from Person.StateProvince as ps
+inner join Person.Address pa on ps.StateProvinceID = pa.StateProvinceID
+
+(FULL OUTER JOIN)
+  retorna um conjunto de todos registros correspondents da tabelaA e tabelaB quando sao iguais.E alem
+  disso se nao houver valores correspondentes, ele simplismente irá preencher esse lado com 'null
+
+  - select * from tabelaA 
+    FULL OUTER JOIN tabelaB on tabelaA.nome = tabelaB.nome
+
+(LEFT OUTER JOIN)
+  retorna um conjunto de todos os registros da tabelaA, e alem disso, os registros correspondentes(quando dis
+  poniveis) na tabelaB. Se nao houver registros correspondentes ele simplesmente vai preencher com 'null'
+
+ - select * from tabelaA 
+   LEFT JOIN tabelaB on tabelaA.nome = tabelaB.nome
+
+ - quero descobrir quais pessoas tem um cartao de credito registrado.
+   
+   - São duas maneiras de fazer, uma com
+     inner join outra com left join.Com inner join serao retornados somente as pessoas que tem o cartao de
+     credito. Mas com left join serao retornados tantos as pessoas que tem quanto as que nao tem ('null')
+              
+   - select * from Person.Person pp
+     left join sales.PersonCreditCard pc on pp.BusinessEntityID = pc.BusinessEntityID
+
+   - se eu quiser pegar apenas as pessoas que nao tem cartao de credito eu apenas vou adicionar o where no 
+     final
+       - select * from Person.Person pp
+	 left join sales.PersonCreditCard pc on pp.BusinessEntityID = pc.BusinessEntityID
+	 where pc.BusinessEntityID is null
+
+   - --encontre todos os enderecos que estao no estado de 'alberta', pode trazer todas informacoes --
+     
+        * traz todo mundo das 2 tabelas
+          - select * from person.Address pa
+            inner join Person.StateProvince ps on pa.StateProvinceID = ps.StateProvinceID
+            and ps.Name = 'alberta'
+  
+        * traz apenas da primeira tabela
+          - select * from Person.Address where stateprovinceID 
+            IN
+            (select StateProvinceID from Person.StateProvince WHERE name = 'alberta')
+
+(UNION)
+
+O operador union combina dois ou mais resultados de um select em um resultado apenas.
+
+ * SELECT coluna1,coluna2 FROM tabela1 
+   UNION 
+   SELECT coluna1,coluna2 FROM tabela2
+
+ * - selecionar os dados productid,name,productNumber onde contein o nome 'chain' no nome, depois selecionar as mesmas
+     colunas mas contendo o nome 'decal' no nome.depois junte as duas selecoes em uma tabela
+   
+   SELECT productID,name,productNumber FROM Production.Product
+   WHERE name like '%chain%'
+   UNION
+   SELECT productID,name,productNumber FROM Production.Product
+   WHERE name like '%decal%'
+
+ * - selecionar os dados firstname,title,middleName onde contein o title como 'Mr.', depois selecionar as mesmas
+     colunas mas contendo o middleName com 'A' depois junte as duas selecoes em uma tabela
+   
+   SELECT FirstName,title,MiddleName FROM Person.Person WHERE title = 'Mr.'
+   UNION
+   SELECT FirstName,title,MiddleName FROM Person.Person WHERE MiddleName = 'A'
+   
+   obs:onde tem dados duplicados ele excluir ex:NULL
+
+(DATAPART)
+ DATEPART (month,day,year ...etc , date )  
+
+ - eu quero saber a data em que uma venda foi feita
+   
+   SELECT salesOrderID, DATEPART(month,orderDate) as mes from sales.salesOrderHeader
+
+ - qual foi a media de total devido por mes(salesOrderHeader)
+  
+   SELECT AVG(totalDue) as media,DATEPART(month,orderDate) as 'mes' from sales.salesOrderHeader
+   GROUP BY DATEPART(month,orderDate)
+
+ - sem datepart
+    SELECT * from Orders o where o.ShippedDate BETWEEN '1996-07-16' and '1998-08-16'
+
+(STRING)
+sql server string operation -> google
+
+ - select REPLACE(productnumber,'-','#')  from Production.Product // coluna,o que vai alterar,pelo o que vi alterar
+ - select LOWER(firstname)  from person.Person
+ - select UPPER(firstname)  from person.Person
+ - select CONCAT(firstname,LastName)  from person.Person
+ - select FirstName, len(firstname)  from person.Person //contar letras
+ - select FirstName, substring(firstname,1,3)  from person.Person // vai pegar apenas as letras de 1 a 3
+
+(FUNCOES MATEMATICAS)
+funcoes matemaricas sql server
+
+ - select round(linetotal,2) from sales.salesorderDetail//arredondar
+
+(SUBQUERY (SUBSELECT))
+ - monte um relatorio de todos os produtos cadastrados que tem preco de venda acima da media
+   ex.saber a media e com isso pegar todos acima dela
+
+   select * from Production.Product where ListPrice > (select avg(listprice) from Production.Product);
+
+ - eu quero saber o nome dos meus funcionarios que tem o cargo de 'desing engineer'
+   
+   select FirstName from HumanResources.Employee HE
+   INNER JOIN Person.person p on he.BusinessEntityID = p.BusinessEntityID
+   and he.BusinessEntityID = 'design engineer'
+
+   select firstname from Person.Person where BusinessEntityID in (select BusinessEntityID from HumanResources.Employee
+   where JobTitle = 'design engineer')
+
+ - encontre todos enderecos que estao no estado de 'albert' todas informacoes
+   person.address / person.stateprovince
+
+   select * from person.address where stateprovinceid in (
+   select stateprovinceid from person.stateprovince where name = 'alberta')
+
+(SELF JOIN)
+filtrar dados usando a mesma tabela
+
+ -- eu quero todos os clientes que moram na mesma regiao
+    select A.ContactName, A.Region, B.ContactName, B.ContactName from Customers A,Customers B
+    where a.Region = b.Region
+
+ - eu quero encontrar (nome e data de contratacao) de todos os funcionarios que foram contratados no mesmo ano(employees)
+    select a.FirstName,a.HireDate,b.FirstName,b.HireDate from Employees a,Employees b
+    where DATEPART(year,a.HireDate) = DATEPART(year,b.HireDate)
+
+ - eu que saber na tabela detalhe do pedido [Order Details] quais produtos tem o mesmo percentual de desconto
+   select a.ProductID,a.Discount, b.ProductID, b.Discount from [Order Details] a, [Order Details] b
+   where a.Discount = b.Discount order by a.Discount
+
+(tipos de dados)
+
+1.booleanos
+por padrao ele é inicializado com nulo, e pode receber tanto 1 ou 0 BIT
+
+2. caracteres
+tamanho fixo - char // permite inserir ate uma quantidade fixa de caracters e sempre ocupa todo o espaço reservado 10/50 
+tamanhos variaveis - varchar ou nvarchar // permite inserir ate uma quantidade que for definida, porem só usa o espaco que for preenchido 
+10/50
+
+3. numeros - valores exatos
+
+tinyint - nao tem parte valor fracionados (ex: 1.43, 24.23) somente 1,123123,324234,313123 etc...
+smallint - mesma coisa  porem limite maior
+int - mesma coisa porem limite maior
+bigint - mesma coisa porem limite maior
+numeric ou decimal - valores exatos, porem permite ter parte fracionados, que tambem pode ser especificado a precisao e escala
+(escala é o numero de digitos na parte fracional) - ex numeric (5,2) 113,44
+
+4.temporais
+date - armazena data no formato aaaa/mm/dd
+datetime - armazena data e horas no formato aaaa/mm/dd:hh:mm:ss
+datetime2 - data e horas com adicao de milissegundos no formato aaaa/mm/dd:hh:mm:ssssss
+smalldatetime - data e hora nos respeitando o limite entre '1900-01-01:00:00:00' ate '2079-06-06:32:59:59'
+time - horas, minutos, segundos e milisegundos respeitando o limite de '00:00:00.000000' to '23:59:59.99999999'
+datetimeoffset - permite armazenar informacoes de dadta e horas incluindo o fuso horário
+
+(chave es;..)
+
+(CREATE TABLE)
+principais tipos de restricoes que podem ser aplicadas
+- NOT NULL - nao permite nulos
+- UNIQUE - forca que todos os valores em uma coluna sejam diferentes
+- PRIMARY KEY - uma juncao de NOT NULL e UNIQUE
+- FOREIGN KEY - identifica unicamente uma linha em outra tabela
+- CHECK - forca uma condicao especifica em uma coluna
+- DEFAULT - forca um valor padrao quando nenhum valor é passado
+
+sql:
+CREATE TABLE Canal(
+CanalId INT PRIMARY KEY,
+Nome VARCHAR(150) NOT NULL,
+ContagemInscritos INT DEFAULT 0,
+DataCriacao DATETIME NOT NULL
+
+CREATE TABLE Video(
+VideoId INT PRIMARY KEY,
+Nome VARCHAR(150) NOT NULL,
+Visualizacoes INT DEFAULT 0,
+Likes INT DEFAULT 0,
+Dislikes INT DEFAULT 0,
+Duracao INT NOT NULL,
+CanalId INT FOREIGN KEY REFERENCES Canal(canalId)
+)
+
+(INSERT INTO)
+ 
+ - insert into nometabela(coluna1,coluna2)
+   values(valor1,valor2)
+ 
+ * varios
+ - insert into nometabela(coluna1,coluna2)
+   values(valor1,valor2)
+   values(valor1,valor2)
+   values(valor1,valor2)
+
+ * inserir dados de uma tabela em outra
+ - INSERT INTO tabelaA (coluna1)
+   SELECT coluna2 FROM tabelaB
+
+ ex.
+  - create table aula(
+    id INT PRIMARY KEY,
+    Nome VARCHAR(200)
+     )
+  
+  - insert into aula(id,nome)
+    values(1,'aula 1');
+  
+  * varios
+  - insert into aula(id,nome)
+    values(2,'aula 2'),
+    (3,'aula 3'),
+    (4,'aula 4');
+
+  * other table
+   criar tabelaExemplo depois fazer isso
+  - insert into casa select * from tabelaExemplo;
+   criar tabela e já colocar inserir dentro
+  
+   - select * into novaTabela from aula
+
+  * desafios
+    imagens desafio insertInto
+
+(UPDATE)
+UPDATE nomeTabela
+SET coluna1 = valor1
+    coluna2 = valor2
+WHERE condicao
+
+- update aula
+  set Nome = 'marcos'
+  where id = 2
+
+(DELETE)
+DELETE FROM nomeTabela WHERE condicao
+delete from aula where id = 4
+
+(ALTER TABLE)
+ALTER TABLE nomeDaTabela ACAO
+
+add,remover,or alterar uma coluna
+setar valores padroes para uma coluna
+add ou remover restricoes de colunas
+renomear uma tabela
+
+- adicionar colunana table
+   alter table youtube add ativo bit 
+
+- alterar o varchar de 200 para 300
+  alter table youtube alter column categoria varchar(300) not null
+
+- alterar o nome da coluna
+  EXEC sp_RENAME 'nomeTabela.nomeColunaAtual', 'nomeColunaNova','COLUMN'
+
+  EXEC sp_RENAME 'youtube.nome', 'nomeCanal','COLUMN'
+
+- alterar o nome da tabela 
+  EXEC sp_RENAME 'nomeTabelaAtual', 'nomeTabelaNova'
+
+  EXEC sp_RENAME 'youtube', 'youtube2'
+
+- criar uma tabela nova
+  1- alterar o tipo de uma coluna
+  2- renomear o nome de uma coluna
+  3- renomear o nome da tabela que voce criou
+
+
+=======================================================================================================
+-------------------------------------------------------------------------------------------------------
+(desafio fundamentos)
+
+desafio 1 - quantos produtos temos cadastrados no sistema que custam mais que 1500 dolares?
+
+ -  select count(ListPrice) from Production.Product where ListPrice > 1500
+
+desafio 2 - quantas pessoas temos com o sobrenome que inicia com a letra P ? 
+
+ -  select count(LastName) from Person.Person where FirstName like 'p%';
+
+desafio 3 - Em quantas cidades unicas estao cadastrados nossos clientes? address
+
+ -  select count(DISTINCT City) from Person.Address;
+
+desafio 4 - Quais sao as cidades unicas que temos cadastrados em nosso sistema ?
+
+ -  select  DISTINCT City from Person.Address;
+desafio 5 - Quantos produtos vermelhos tem preco entre 500 a 1000 dolares?
+
+ -  select count(*) from Production.Product where color = 'red' and ListPrice BETWEEN 500 AND 1000;
+
+desafio 6 - Quantos produtos cadastrados tema a palavra 'road' no nome deles ? 
+
+ -  select count(*) from Production.Product WHERE Name like '%road%';
+	
+
+desafios
+/*
+
+* where
+
+a equipe de producao de produtos precisa do nome de todas as pecas que pesam mais que 500kg mas 
+nao mais que 700kg para inspecao
+
+foi pedido pelo marketing uma relacao de todos os empregados que sao casados e a assalariados
+
+****  um usuario chamado Peter Krebs esta devendo um pagamento, consiga o email dele para que possamos enviar uma cobranca
+
+* count
+
+quantos produtos temos cadastrados em nossa tabela de produtos
+desafio -> quantos tamanhos de produtos unicos temos cadastrado em nossa tabela ..distin
+
+ * orderby
+
+- desafio obter o productId dos produtos mas caros cadastrados no sistema,listando do mais caro para o mais barato
+
+- obter o nome e numero do produto dos produtos que tem o productID entre 1~4 do menor para o maior
+
+* Between
+
+selecioner todos com produto entre 1500 e 2000
+
+selecioner todos com produto que nao esta entre 1500 e 2000
+
+selecioner todas pessoas que tem id  (2,7,13) 'In'
+
+Group by
+
+1 - eu preciso saber quantas pessoas tem o mesmo middleName agrupadas por o middleName
+    select middleName,count(middleName) from Person.Person group by MiddleName;
+
+
+2 - eu preciso saber em media qual é a quantidade que cada produto é vendido na loja
+    
+    select productId,avg(orderQty) from Sales.SalesOrderDetail group by ProductID
+
+3 - eu quero saber qual foram as 10 vendass que no total tiveram os maiores valores 
+    de venda(lineTotal) por produto do maior para o menor
+    
+    select top 10 productId,sum(lineTotal) from Sales.SalesOrderDetail GROUP BY ProductID ORDER BY sum(lineTotal) desc;
+
+4 - eu preciso saber quantos produtos e qual é a quantidade media de produtos temos cadastrados nas nossas ordem de servico (workOrder), 
+    agrupados por productId
+    
+    select productId,count(productid) as 'contagem',avg(orderQty) as 'media' from Production.WorkOrder group by ProductID;
+
+HAVING
+
+1 - estamos querendo identificar as provincias(stateProvinceId) com o maior numero de
+    cadastro nosso sisttema, então é preciso encontrar quais provincias (stateProvinceId)
+    estao registradas no banco de dados mais que 1000 vezes
+   
+    select stateProvinceID,count(stateProvinceID) as 'quantidade' from  Person.Address group by StateProvinceID
+    HAVING count(StateProvinceID) > 1000;
+
+2 - sendo que se trataa de uma multinacional os gerentes querem saber quais produtos (productId) nao estao
+    trazendo em media no minimo 1 milhao em total de vendass (lineTotal)
+   
+    select productId,avg(lineTotal) from Sales.SalesOrderDetail group by ProductID
+    having avg(linetotal) < 1000000;
+
+table = tutoriais
+class = tutorial
+    
+01:23:00
+
+*/
+
+
+
+
+INSERT INTO tb_role(role_id,role_name)
+values(2,'ROLE_USER');
+
+INSERT INTO tb_users_roles(user_id,role_id)
+values(1,1),(1,2);

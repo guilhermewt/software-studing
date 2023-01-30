@@ -1,0 +1,23 @@
+1:00
+
+(cronograma)
+
+ler rest/(sexta)
+ler rest/revisar todos discursos e explicar api  (quarta)
+spring-boot/jpa-hibernet udemy (seg) 
+java-es/revisar- p-funcional (terca)
+java-es/revisar p-funcional (quinta)
+BD (sab)
+
+html/javascrip - logica/bd
+
+significado:
+
+- explicando o basico e aprendendo principios(rest)
+- estudar jpa/hibernet para ter base para aprinfundar no spring
+- estudando estruturas de dados e revisando conteudos
+  
+
+
+  
+

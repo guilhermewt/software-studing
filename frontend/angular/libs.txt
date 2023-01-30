@@ -1,0 +1,14 @@
+angular-fontawesome
+
+https://fontawesome.com/docs/web/use-with/angular
+github: https://github.com/FortAwesome/angular-fontawesome
+
+ng add @fortawesome/angular-fontawesome@0.12.x
+
+documentation > In-depth usage guide > iconlibrary
+
+animation -> [spin]="true"
+
+(icons gratis)
+
+fontawesome.com -> icons -> allversion -> fontawe...freicons

@@ -1,0 +1,21 @@
+https://appmaster.io/pt/blog/perguntas-da-entrevista-api-de-descanso-superior
+
+Rest
+
+são transferências de dados usando protocos HTTP. É por meio do rest que a maioria dos sistemas online se comunicam(trocam informaçoẽs).
+O rest delimita algumas regras que essas troca de informaçoẽs deve possuir, tornando segura as trocas de informaçoẽs 
+
+Restful
+
+É quando eu coloco no sistema todos as principios(regras) que o rest
+diz que um sistema deve ter
+
+princípios do Rest?
+
+cliente-servidor(client-server):separar a interface que se comunica com o cliente do armazenamento de dados, assim podemos ter várias portabilidades como "mobile","desktop","react para web".
+	Então uma api pode ser feita em qualquer linguagem,contanto que ela deve fornecer seus dados através de formato de texto como "JSON,XML,RSS etc..."
+	
+sistema em camada(layered-system):o cliente acessa a um endpoint sem precisar da complexibilidade do sistema, ele nao precisa saber de quais passos estao sendo nessarios para o servidor responder a requisicao, ou quais outra camada o servidor estara lidando,para que a requisicao seja respondida
+
+
+

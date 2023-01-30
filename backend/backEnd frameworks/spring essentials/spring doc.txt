@@ -1,0 +1,25 @@
+//colocar @builder.default na class emprestimo e apagar o commandline, fazendo isso os testes funcionarao
+// error no livro e emprestimo nao salvar
+* baixar as dependencias dos springdoc api
+* configurar na no aplication.properties
+  - springdoc.swagger-ui.path=/swagger-ui.html
+
+* colocar @ParameterObject no metodo page do controller para mostrar as requisicoes de page e size 
+  no swagger
+
+* deixar a documentacao mais clara de entender
+
+  - class departmentPostRequestBody encima do atributo ou metodo
+     - @Schema(description = "this is the department's name", example = "tecnology, RH, administrativo ...etc")
+    
+  - na class departmentResources tambem podemos configurar no metodo findall -> page
+     - @Operation(summary = "list all departments paginated", description = "the default size is 20, use the parameter size to change the default value", 
+	tags= {"departments"})
+
+  - o que vai retorna quando a requisicao nao for bem sucedida ou mau sucedida no metodo delete
+     @ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "successful operation"),
+			@ApiResponse(responseCode = "400", description = "when department does not exist in the dataBase")
+	})
+
+* v3/api-docs

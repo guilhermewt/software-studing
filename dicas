@@ -1,0 +1,20 @@
+(dicas e erros que passei)
+
+- quando injetar usuarios por data.sql e a configuracao for 'identify' colocar o id como default no insert into
+- para deletar um usuario com muitas associacoes, mas entre essas  associacoes tiver associacoes que nao pode ser excluidas como as many to many
+  que , farei o seguinte nas many to many colocarei um cascade = CascadeType.PERSIST e nas demais cascade = CascadeType.DELETE OU ALL
+  
+- se der error na instacao do angular apagar npm e instalar de novo
+	sudo rm -rf node_modules.
+	npm install  
+	
+- desinstalar angular -> sudo npm uninstall -g @angular/cli depois limpar cache	-> sudo npm cache clean --force
+
+- na class putRequest os atributos comuns serao todos atualizados menos as listas e parecidas
+
+- (front) quando for alinhar algo deixar o margin padrao para todos os lados right,left...
+
+- sempre salvar os dados criptografado quando usar spring security
+
+-MAVEN quando estiver com erro ao criar um projeto maven basta remover a class .m2 e depois criar o projeto
+  
