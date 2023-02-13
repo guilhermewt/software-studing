@@ -36,7 +36,7 @@ public class BadRequestException extends RuntimeException{
 de base para criar os handler
    - @Getter
 @SuperBuilder
-public class BadRequestExceptionDetails extends StandardError implements Serializable 
+public class BadRequestExceptionDetails extends exceptiondetails implements Serializable 
 
 - criar exception handler 
    - @ControllerAdvice
@@ -63,7 +63,7 @@ public class BadRequestExceptionDetails extends StandardError implements Seriali
 (criar uma excessao especifica para validation)
 
  - criar classe
-   - public class ValidationExceptionDetails extends StandardError{
+   - public class ValidationExceptionDetails extends exceptiondetails{
  
  - private final String fields; // para pegar o campo com error -> name
    private final String fieldsMessage; // message que tiver com o campo

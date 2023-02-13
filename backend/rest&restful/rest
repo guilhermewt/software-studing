@@ -12,10 +12,99 @@ diz que um sistema deve ter
 
 princípios do Rest?
 
-cliente-servidor(client-server):separar a interface que se comunica com o cliente do armazenamento de dados, assim podemos ter várias portabilidades como "mobile","desktop","react para web".
+cliente-servidor(client-server):
+
+separar a interface que se comunica com o cliente do armazenamento de dados, assim podemos ter várias portabilidades como "mobile","desktop","react para web".
 	Então uma api pode ser feita em qualquer linguagem,contanto que ela deve fornecer seus dados através de formato de texto como "JSON,XML,RSS etc..."
 	
-sistema em camada(layered-system):o cliente acessa a um endpoint sem precisar da complexibilidade do sistema, ele nao precisa saber de quais passos estao sendo nessarios para o servidor responder a requisicao, ou quais outra camada o servidor estara lidando,para que a requisicao seja respondida
+sistema em camada(layered-system):
 
+o cliente acessa a um endpoint sem precisar saber complexibilidade do sistema, ele nao precisa saber de quais passos estao sendo necessários para o servidor responder a requisicao, ou quais outra camada o servidor estara lidando,para que a requisicao seja respondida
+
+sem estado(stateless):
+
+cada requisição que o cliente faz para o servidor, deverá conter todas informaçoẽs necessárias para o servidor entender e responder a requisição
+
+cacheable:
+
+as requisições deverão ser explícitas ao decorrer das operaçoẽs, podendo o cliente usar qualquer recurso para armazenar as resposta do servidor em cache.sendo assim a api nunca deverá deixar o cliente sem resposta. Contudo se a requisição falhar deverá ser impresso uma mensagem de error e outra mensagem ser for bem successedida
+
+Código sob demanda(cod an demand):
+
+A resposta de uma API pode conter código executável que os usuários podem executar. Assim, o aplicativo cliente pode executar o código em seu próprio back-end.
+
+===============o que são metodos indepotentes====================
+
+PUT é idempotente, sugerindo que não afeta os arquivos ainda com a frequência com que é usado.
+POST não é idempotente, o que significa que, se você a utilizar mais de uma vez, ela continuará gerando novos arquivos.
+
+==============URI============================
+
+(url)
+- é uma cadeia de caracteres compacta usada para identificar ou denominar um recurso na Internet(servidor)
+- é o endereço de um recurso (como um arquivo, uma impressora etc.), disponível em uma rede; seja a Internet, ou mesmo uma rede corporativa como uma intranet.
+
+
+ex:esquema://domínio:porta/caminho/recurso?querystring#fragmento
+ *	esquema, ou protocolo, poderá ser HTTP, HTTPS, FTP, entre outros.
+ *	domínio, ou máquina, designa o servidor que disponibiliza o documento ou recurso designado.
+ *	porta, ou porto, é o ponto lógico no qual pode-se fazer a conexão com o servidor (opcional).
+ *	caminho especifica o local (geralmente num sistema de arquivos) onde se encontra o - recurso dentro do servidor.
+ *	query string é um conjunto de parâmetros a ser enviado ao servidor, usado para localizar, filtrar, ou mesmo criar o recurso (opcional).
+ *	identificador de fragmento se refere a uma parte ou posição específica dentro do recurso (opcional).
+
+
+(URN)
+Um URN é um recurso da internet com um nome estático que permanece válido mesmo se seus dados forem movidos para outro local.
+O objetivo do URN é permitir a separação entre a identificação (nome único) e localização (por exemplo, endereços URL que podem fornecer o recurso identificado).
+
+EX.: Cada URN é composta de três partes: o nome urn, o caractere dois pontos (“:”) e uma sequência de caracteres que serve como um identificador único. 
+
+urn:isbn:0572248854 para identificar um livro através de seu número ISBN 
+urn:uuid:6e8bc430-9c3a-11d9-9669-0800200c9a66 como um identificador global único 
+urn:publishing:book como um XML que identifica um documento como um tipo de livro 
+
+============ códigos de status HTTP? ==============
+O
+s códigos padrão usados no status HTTP correspondem aos status de conclusão de tarefa do servidor estabelecidos. Por exemplo, HTTP Status 404 indica que o servidor não possui o recurso solicitado.
+
+200- ok,201 - craeted,204 - no content,400 - bad request,401 non authorized,403 forbidden,404 not found,409 conflict,500 internal error
+
+==========@requestMapping===========
+
+https://www.geeksforgeeks.org/spring-requestmapping-annotation-with-example/
+https://www.baeldung.com/spring-requestmapping
+
+server para mapear solicitacoes http, ela é usada tanto no mvc como no rest.o dispatcher servlet(responsavel por rotear solicitacoes http) tras varias respostas http, entao eu uso o requestmapping para mapear cada uma e dizer o que cada uma faz, esse mapeamento e feito muitas das vezes pelo caminho (endpoint) e httpmethod(get,post,delete).
+existe dois tipo de requestMapping a 
+
+- nivel de classe: ao acessar este endpoint eu terei um comportamento padrao, e se eutiver varios metodos dentro dessa classe primeiro eu colocarei o endpoint dela e depois os do metodos que vou querer ex. /produtos -> produtos/all,produtos/pageable etc..
+
+
+- nivel de metodo:este tera um comportamento mais especifico
+
+=========Quais são os recursos dos Web Services RESTful?============
+
+
+- comunicação Cliente-Servidor
+- protocolo http
+- URLs
+- para reduzir solicitacoes repetitivas usam armazenamento em cache
+- nao dependem de terceiros, oferecendo total certeza de que os dados necessários serão obtidos nao solicitacao e resposta
+- Esses serviços também podem implementar o padrão de arquitetura REST usando serviços SOAP.
+
+===========Podemos implementar a segurança da camada de transporte (TLS) em REST?==============
+
+Podemos sim! A comunicação do cliente-servidor em REST é criptografada usando TLS
+
+tls:O principal objetivo do protocolo TLS é garantir a privacidade e a integridade dos dados em uma comunicação entre duas aplicações.
+
+===========cache===============
+
+quando uma resposta do servido é feita ela é armazenada em cache(salva).para que quando ela for pedida novamente nao precise fazer todo o processo no servido. Essa técnica não apenas alivia a carga do servidor, mas também melhora seu desempenho e escalabilidade. A resposta só pode ser armazenada em cache pelo cliente e apenas por um curto período de tempo.
+
+data/hora
+data/hora deixara de ser valida
+Data e hora da atualização do recurso, que normalmente mantém as informações mais recentes
 
 

@@ -1,0 +1,26 @@
+Conteúdo
+
+ok - O que é uma API REST?
+ok - Quais são os princípios do REST?
+ok - Como funciona a Arquitetura de Microsserviços?
+ok - Quais são os métodos HTTP suportados pelo REST?
+ok - Qual é a diferença entre PUT e POST?
+ok - O que é URI?
+ok - O que são códigos de status HTTP?
+ok - O que constitui os principais componentes da resposta HTTP?
+ok - Qual é o tamanho máximo da carga útil que pode ser enviada em métodos POST?
+ok - Definir RestTemplate no Spring
+ok - Para que serve @RequestMapping?
+ok - Liste as ferramentas ou API para desenvolver ou testar a API da web - postman,swagger,insonia
+ok - Quais são os recursos dos Web Services RESTful?
+ok - Podemos implementar a segurança da camada de transporte (TLS) em REST?
+ok - O que é cache?
+
+Você pode me dizer as desvantagens dos serviços web RESTful?
+Quais são os melhores recursos para aprender a API REST?
+Qual é a diferença entre AJAX e REST?
+Qual é a diferença entre SOA Monolítica e Arquitetura de Microsserviços?
+Diferenciar entre SOAP e REST?
+Quais são as diferenças entre WebSockets e REST?
+Liste as anotações principais que estão presentes na API JAX-RS
+

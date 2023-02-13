@@ -1,0 +1,22 @@
+https://medium.com/@gcbrandao/diferença-entre-restcontroller-e-controller-annotation-no-spring-mvc-e-rest-8533998a93eb
+
+@restcontroller
+
+simplesmente retorna o objeto e os dados do objeto são gravados diretamente na resposta HTTP como JSON ou XML.
+
+@controller
+
+ O trabalho do @Controller é criar um Map do model object e encontrar uma view
+
+- aplicativos web usam @controller e api rest usam @restcontroller
+
+- @controller marcar uma classe como spring MVC,@RestController usado para serviços RESTFul
+
+- A anotação @Controller indica que a classe é um “Controller” (dentro do contexto do padrão MVC ele é o ‘C’)
+
+- ao marcar uma classe como @restController todos os metodos vao gravar um objeto
+
+- a diferença fundamental entre um aplicativo web e uma API REST é que a resposta de um aplicativo da web é uma visualização geral de HTML + CSS + JavaScript enquanto a API REST apenas retorna dados em forma de JSON ou XML
+
+
+- o restcontroller é uma juncao entre @controller e @resposeBody

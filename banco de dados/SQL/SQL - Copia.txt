@@ -462,6 +462,31 @@ renomear uma tabela
   2- renomear o nome de uma coluna
   3- renomear o nome da tabela que voce criou
 
+(DROP TABLE)
+
+ - apagar tabela
+DROP TABLE 
+
+- apagar o que esta dentro da tabela
+  truncate table nomeDaTabela
+
+(NOT NULL CONTRAINT)
+
+- nao permite um valor ser null
+
+(UNIQUE CONTRAINT)
+
+- somente valores unico, a diferencia dele para o primary key é que ele tem ele pode ser instaciado mais de uma vez
+
+(VIEW)
+
+- trazer dados simplificado sem precisar trazer todos dados da tabela1
+
+CREATE VIEW [PESSOAS SIMPLIFICADO] SELECT firstName,middleName,lastname 
+FROM Person.person where title = 'Mr.'
+
+select * from [PESSOAS SIMPLIFICADO]
+
 
 =======================================================================================================
 -------------------------------------------------------------------------------------------------------

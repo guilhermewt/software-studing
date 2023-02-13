@@ -1,0 +1,32 @@
+https://www.appsdeveloperblog.com/resttemplate-example-with-basic-authentication/
+
+1 - criar uma class para configurar
+
+  public class RestTemplateClient { 
+
+2 - a url da api que deseja consumi-la
+  public static final String REST_SERVICE_URL = "http://localhost:8080/user/" ;   
+  
+3 - metodo com as configuracoes de username e passaword
+
+  String estática privada getBasicAuthHeader () {    
+        String credenciais = "admin:admin123" ;
+        return new String ( Base64. encodeBase64 ( credenciais. getBytes ())) ;  
+    }
+    
+  O getBasicAuthHeader() retorna uma string codificada em Base64 das credenciais do Basic Auth  
+    
+4 - metodo que ira junto com a solicitacao get,post etc...
+ 
+  private static HttpHeaders httpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Basic " + getBasicAuthHeader());
+        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        return httpHeaders;
+    }
+    
+5 -  metodo do controller 
+    
+    ResponseEntity<Category> responseEntity = new RestTemplate().exchange(REST_SERVICE_URL,
+                HttpMethod.GET, new HttpEntity<>(httpHeaders()), new ParameterizedTypeReference<List<Category>>() {
+		}).getBody();  

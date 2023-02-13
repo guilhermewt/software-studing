@@ -1,0 +1,53 @@
+https://vidafullstack.com.br/angular/o-que-sao-diretivas-angular/#:~:text=Colocando%20em%20simples%20palavras%2C%20são,conteúdo%20do%20componente%20no%20local.
+
+Colocando em simples palavras, são instruções no DOM.
+
+Um exemplo é quando colocamos o seletor de nosso componente, nós estamos instruindo o Angular a adicionar o conteúdo do componente no local.
+
+- Component Directives, são os usados na classe principal do componente. Eles contém as informações de como o componente será processado, instanciado e usado.
+
+- Attribute Directives, são usados para mudar o estilo e comportamento dos elementos do DOM. Temos algumas pré-construídas como “ngClass” e “ngStyle”.
+
+- Structural Directives, aqui é onde mudamos e manipulamos as estruturas dos elementos do DOM. São usados o operador “*” e também temos algumas pré-construídas como o “*ngIf” e “*ngFor”.
+
+structural{
+- *ngIf,
+	
+- *ngIfelse
+  ex.<ul>
+    <li>Item para todos se estiver logado ou não</li>
+    <li> Item para todos se estiver logado ou não </li>
+    <li *ngIf="estaLogado; else naoEstaLogado">Somente se estiver logado</li>
+  </ul>
+  
+- *ngFor 
+	*ngFor="let tempItem of List;
+
+
+  <ng-template #naoEstaLogado >
+    <p>Você não está logado</p>
+  </ng-template>
+  }
+  
+  attribute{
+- ngStyle
+  Essa é uma diretiva que muda o CSS dos elementos dinamicamente, não adicionar elementos no DOM como outras diretivas e sim mudar as já existentes.
+  <elemento [ngStyle]="{ 'propriedade-css': 'valor' }"> </elemento>
+  
+- ngClass
+	Aqui trabalhamos adicionando e removendo classes css e assim mudando dinamicamente a view.
+	<elemento [ngClass]="{ 'classe-css': condicao}"> </elemento>    
+}
+	
+component{
+	ng g d directives/red
+
+ * red.directives.ts
+   -  constructor(private el: ElementRef) { 
+    	el.nativeElement.style.color = "#e35e6b"
+      }
+  
+   - footer.html // no lugar do red styles colocar appRed so que fora da class
+}	
+	
+	

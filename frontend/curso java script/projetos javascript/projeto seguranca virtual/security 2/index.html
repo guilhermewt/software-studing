@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta none="viewport" content="width=device-width", initial-scale="1.0">
+        <title>exercicio Javascript-</title>
+        <script src="./security.js"></Script>
+            <link rel="stylesheet" type="text/css" href="css.css ">
+    </head>
+
+    <body>
+       <h1>security</h1>
+
+       <div>
+           <h1>mostrar list</h1>
+           <button type="button" onclick="showList()">verificar</button>
+           <label id="list">list here</label>
+       </div>
+
+       <h2>digite seu nome</h2>
+       <input type="text" id="nome" placeholder="nome">
+
+       <h2>quem te convidou</h2>
+       <input type="text" id="convidadoPor">
+
+       <button type="button" onclick="fazerVerificacao()">verificar</button>
+
+       <div id="snackbar">
+           <label id="permissao">pesquisando....</label>
+           <ul>
+               <li></li>
+           </ul>
+       </div>
+
+    </body>
+</html>

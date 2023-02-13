@@ -2,6 +2,14 @@
 
 (cronograma)
 
+agora
+manha:projeto-conteudo
+tarde:angular-projeto
+noite:(html/javascript)seg.terc.quart
+noite:(logica/bd)qui.sext.sab
+
+antes
+
 ler rest/(sexta)
 ler rest/revisar todos discursos e explicar api  (quarta)
 spring-boot/jpa-hibernet udemy (seg) 

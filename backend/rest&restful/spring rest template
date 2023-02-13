@@ -1,0 +1,43 @@
+============= Definir RestTemplate no Spring ==============
+https://reflectoring.io/spring-resttemplate/
+
+RestTemplate é uma classe dentro do framework Spring que é responsável por consumir apis 
+
+o processo de restTemplate é divido em dois. Ele usar o http para solicitaçoes e depois já na classe resttemplate ele converte as respostas http json ou xml para objetos em java
+
+Por padrão, RestTemplateusa a classe java.net.HttpURLConnection como o cliente HTTP.
+
+===============métodos úteis de RestTemplate==================
+
+
+Para cada método http o resttemplate tem um metodo específico baseado em uma convencao nomenclatura
+ * a primeira parte do nome indica o método HTTP que está sendo invocado
+ * a segunda parte no nome indica o elemento retornado.
+ 
+ metodos
+ 
+ - getForObject() == objeto
+    
+ 
+ - getForEntity() == entity(status)/objeto
+     restTemplate.getForEntity(resourceUrl, String.class);
+     restTemplate.getForEntity(resourceUrl, List.class);
+     
+ - exchange() == metodo http especificado pode ser qualquer um get,post,put... retorna entity(status) /objeto
+ 	 restTemplate.exchange(resourceUrl, 
+                    HttpMethod.POST, 
+                    request, 
+                    String.class);
+ 
+ - delete() == exluir
+ - put() == atualiza um recurso
+ 	restTemplate.exchange(
+            	resourceUrl, 
+            	HttpMethod.PUT, 
+            	request, 
+            	Void.class);
+ - postForObject() == crir um novo recurso
+	.postForObject(resourceUrl, request, String.class);
+	
+=============@restcontroller && @controller===============
+	

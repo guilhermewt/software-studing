@@ -1,0 +1,51 @@
+https://vidafullstack.com.br/angular/aprenda-o-que-e-databinding-com-angular/
+
+
+=========== interpolacao=================
+A interpolação de string é usada para dados dinâmicos e fica dentro do “.component.ts” o arquivo de lógica, e é mostrado no “.component.html” o arquivo da view.
+
+
+ts.
+public title = 'meu primeiro app';
+
+html
+<h1>{{ title }}</h1>
+
+
+
+=========== property binding=================
+
+Aqui é onde podemos manipular as propriedades do HTML, como o onClick, usamos o property binding para mexer com eles.
+
+<element [property]='value'></element>
+
+ts.
+public user:string = 'Dener Troquatte';
+  public greeting:string = 'Bem-vindo ao app';
+ 
+  public getGreeting() {
+    return this.greeting}  + this.user};
+  }
+  
+html
+  
+  <h1 [innerText]='getGreeting()'></h1>
+  
+
+=========== event binding=================
+
+disparar uma acao ao clicar em um butao
+
+ex.mostrar mensagem ao clicar no butao
+
+ts.
+  public formMessage!:string;
+ 
+  public onSubmitForm() {
+    return this.formMessage = 'Obrigado por se registar. Vamos enviar um e-mail de confirmação.';
+  }
+  
+html
+
+<button (click)='onSubmitForm()'>Register</button>
+<p>{{ formMessage }}</p>  

@@ -1,0 +1,26 @@
+Um método de arquitetura para desenvolver aplicativos em nuvem é chamado de microsserviços. Cada aplicação é composta por uma série de serviços, cada um dos quais é executado em um processo separado e interage com os demais por meio de APIs.
+
+
+Clientes
+As solicitações são enviadas por vários usuários usando vários dispositivos.
+
+Provedores de identidade
+Verifique as identidades de usuários ou clientes e forneça tokens de segurança.
+
+Gateway de API
+As solicitações do cliente são tratadas por meio do API Gateway.
+
+Conteúdo estático
+Todo o material do sistema está contido em conteúdo estático.
+
+Gestão
+Determina falhas e equilibra serviços entre nós.
+
+Descoberta de serviço
+Uma ferramenta para determinar o caminho de comunicação entre microsserviços.
+
+Rede de entrega de conteúdo
+Uma rede distribuída de servidores proxy e data centers associados.
+
+Serviço remoto
+As informações armazenadas em uma rede de dispositivos de TI podem ser acessadas remotamente com a ajuda de um serviço remoto.

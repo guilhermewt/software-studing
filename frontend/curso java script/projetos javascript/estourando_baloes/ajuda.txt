@@ -1,0 +1,34 @@
+- pegar o nivel do jogo
+- window.location.href + a url e o nivel do jogo para abrir a parte de estourar baloes
+- ao abrir inicie a class jogo.js com o onload
+
+jogo.js
+- pegar o nivel do jogo
+- com base no nivel definir os segundos(quanto mais alto os segundos mais facil)
+- inserir segundos no cronometro
+- definir no html as quantidades e estourados innerHtml
+- criar baloes
+   - document.createElement("img");
+   - id,
+   - ao clicar no balao trocar para balao estourado - > function(){ estourar(this)
+   - colocar balao .appendChild(balao);
+
+- estourar balao
+    - tirar o click do balao -> .setAttribute("onclick", "")
+    - achar o balao pelo id e mudar o src
+
+- ainda dentro do estourar chamar a funcao de pontuacao(-1) para acrescentar os estourados e diminuir os inteiros
+
+- pontuacao(-1)
+    - pegar os baloes que estao estourados e inteiros e fazer parseInt-> innerHtml
+    - fazer logica baloes inteiros = subtrair,baloes estourados =  acrescentar(-+ = -,-- = +)
+    - definir de novo no innerHtml
+    - chamar funcao situacao do jogo, passando os baloes inteiros se for igual a zero messagem de parabens e chamar para tempo
+
+- funcao contagem_tempo
+  - receber os segundos e subtrair por um
+  - se for segundos for ugual a -1 chamar funcao clearTimeout(timerId) e gamer over e returnar false
+  - colocar segundos no cronometro (innerHtml)
+  - criar variavel timerId e instanciar fora 
+  - fazer variavel timerId receber a funcao setTimeout e colocar nela que a cada 1s vou chamar a funcao que vou colocar dentro
+     - setTimeout("contagem_tempo("+segundos+")",1000)     

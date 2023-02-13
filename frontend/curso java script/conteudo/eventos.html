@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta none="viewport" content="width=device-width", initial-scale="1.0">
+        <title>eventos mouse test</title>
+        <script src="./test.js">
+
+
+         /* eventos mouse */
+            //onclick - acionado no clique do mouse
+            // ondblclick - acionado no clique duplo do mouse
+            //onmousedown - acionado no clique do mouse(soltando ou nao o botao)
+            //onmouseover - acionado quando cursor do mouse sobrepoe o elemento o elemento da pagina
+            //onmouseout - acionando quando o cursor do mouse sai da area  de um elemento da pagina
+         /* fim eventos mouse */
+
+         /* eventos teclado */
+            //onkeydown - acionado no momento em que uma tecla é pressionada(soltando ou nao a tecla)
+            //onkeypress - acionado no momento em que uma tecla é pressionada(soltando-a ou nao), porem nao captura todas as teclas, como por exemplo alt,ctrl,esc, shift,etc
+            //onkeyup - acionada no momento em que a tecla é liberada
+         /* fim eventos teclado */
+
+         /* eventos janela */
+            //onload - acionado quando a pagina finaliza o carregamento
+            //onresize - acionado quando a pagina ou frame é redimensionado
+         /* fim eventos janela*/
+
+         /* eventos formulario*/
+            //onfocus - acionado quando o elemento recebe o foco do cursos
+            //onblur - acionado quando o elemento perde o foco do cursor
+            //onchange - acionado quando o estado do elemento é modificado
+         /* fim eventos formulario*/
+
+        </Script>
+    </head>
+
+    <!-- eventos janela -->
+    <body onresize="console.log('a pagina foi redimensionada')">
+    <!-- fim eventos janela -->
+        
+        <h2>mouse</h2>
+        <br>
+        <br>
+        
+        <!-- eventos mouse -->
+        <div onmouseout="alert()"style="background: #ccc; height: 150px; width: 150px;"></div>
+        <!-- fim eventos mouse -->
+
+        <h2>teclado</h2>
+        <br>
+        <br>
+        <!-- eventos teclado -->
+          <input onkeyup="alert('uma teclado é liberada')" type="text">
+        <!-- fim eventos teclado -->
+
+        <h2>formulario</h2>
+        <br>
+        <br>
+        <!-- eventos formulario -->
+            <input onfocus="alert('o elemento foi focado')" onblur="alert('o elemento perdeu o foco')">
+
+            <br><br>
+            <select onchange="alert('a opcao foi alterada')">
+                <option value="1">primeira opcao</option>
+                <option value="2">segunda opcacao</option>
+            </select>
+        <!-- eventos formulario -->
+
+
+    </body>
+
+
+</html>

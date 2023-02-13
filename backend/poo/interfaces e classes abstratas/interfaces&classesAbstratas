@@ -2,8 +2,8 @@ interfaces
 
 é quando duas classes possuem comportamentos comuns que podem ser separados em um outro local,
 entao dizemos que este local é uma interfaces e qualquer classe pode implementar ela em si.
-Então interfaces nada mais do que um cojunto de metodos que toda classe que implementa-la deve
-possuir se tornando em uma espécie de contrato quem quiser pegar algum metodo de uma interface
+Então interfaces nada mais é do que um cojunto de metodos que toda classe que implementa-la deve
+possuir, se tornando em uma espécie de contrato quem quiser pegar algum metodo de uma interface
 obrigatoriamente se ela tiver muitos metodos terá que implementar todos em si.
 
 casses abstratas

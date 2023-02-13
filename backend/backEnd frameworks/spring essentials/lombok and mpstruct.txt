@@ -53,4 +53,10 @@ atributos
           -  return repository.save(DepartmentMapper.INSTANCE.toDepartment(departmentPostRequestBody));
      
      - classe de service metodo put
+     
+- atualizar apenas o que eu quero
+   public abstract UserDomain updateUserDomain(UserPut userPut,
+										  @MappingTarget UserDomain userDomain); ///o userdomain recebe o esta dentro do userPut
+										  
+   UserDomainMapper.INSTANCE.updateUserDomain(userDomainPutRequestBody,savedUserDomain);    
  
