@@ -1,0 +1,30 @@
+(programacao reativa)
+
+precisa acontecer algo para que o codigo funcione
+
+ex.funcionario proativo(toma decisoes por conta)
+no codigo isso nao funciona pois programacao reativa significa que toda hora a funcao vai procurar algo para fazer nisso o processamento ficaria mais pesado por conta da funcao esta o tempo todo ativa
+
+
+(padrao observer)
+
+padrao orientado a eventos
+
+subject: monitorar e detectar os eventos
+
+observer:sao os codigos que estao interessados em determinados eventos
+   
+* o observer se cadastrar no subject e diz que esta interessado em um determinado evento
+* fluxo: acontecer um evento o subject detectar e notifica os observer que estao interessados
+
+
+ex. evento de compra
+  observer
+  - mandar mensagem ("mandar mensagem de compra pro usuario")
+  - da baixa no estoque("subtrar o estoque")
+  - separar mercadoria outro sistema ("separar mercadoria para mandar pro cliente")
+
+
+ex. namorada(observer) porteiro(subject) evento(namorado)
+sem observer/com observer
+proativa/reativa

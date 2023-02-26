@@ -441,6 +441,9 @@ setar valores padroes para uma coluna
 add ou remover restricoes de colunas
 renomear uma tabela
 
+adicionar nova coluna
+setar tipo de valores
+
 - adicionar colunana table
    alter table youtube add ativo bit 
 
@@ -458,7 +461,7 @@ renomear uma tabela
   EXEC sp_RENAME 'youtube', 'youtube2'
 
 - criar uma tabela nova
-  1- alterar o tipo de uma coluna
+  1- alterar o tipo de uma colunavs
   2- renomear o nome de uma coluna
   3- renomear o nome da tabela que voce criou
 
@@ -477,6 +480,14 @@ DROP TABLE
 (UNIQUE CONTRAINT)
 
 - somente valores unico, a diferencia dele para o primary key é que ele tem ele pode ser instaciado mais de uma vez
+
+(Check contraint)
+
+- colocar restricoes na hora de inserir dados
+
+create table mesa(
+cor varchar(150) check(cor = 'amarelo' or cor = 'azul')
+)
 
 (VIEW)
 

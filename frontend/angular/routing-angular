@@ -1,0 +1,57 @@
+https://vidafullstack.com.br/angular/o-que-e-routing-angular/
+
+
+É uma maneira simples de navegar nas páginas do nosso app.
+
+Tecnicamente não temos múltiplas páginas no Angular, apenas carregamos diferentes componentes, desta forma economizamos dados e fazemos a página parecer diferente.
+
+ - baixar: ng generate module app-routing --flat --module=app
+ 
+ - criar array
+ 		const appRoutes: Routes = [
+  			{ path: '', component: PrincipalComponent }, // www.exemplo.com.br/
+  			{ path: 'sobre', component: SobreComponent}, // www.exemplo.com.br/sobre
+  			{ path: 'usuario',  component: UsuarioComponent }  // www.exemplo.com.br/usuario
+        ];
+        
+ - import { Routes, RouterModule } from '@angular/router';
+   
+ - registrar as rotas
+ 	RouterModule.forRoot(appRoutes)
+ 	
+ - directiva que diz ao Angular que queremos mostrar apenas o componente que está disponível na URL.
+   <router-outlet></router-outlet>	  
+   
+ - navegacao -> routerLink
+ 	<a routerLink="/path/to/component">Link</a>  
+ 	
+ -  “routerLinkActive” que é uma diretiva para estilizar nossos links ativados baseado na rota               
+    selecionada.
+    
+    <li routerLinkActive="active-class"><a routerLink="/path">Link</a></li>//active-class == css class
+    
+    * problema que só fica ativo na rota padrao é resolvido como este codigo. Setamos como true, pois                  
+      assim especificamos para o Angular que só é considerado o link ativo caso ele realmente esteja 		  no caminho exato.
+      
+      [routerLinkActiveOptions]="{exact:true}//
+   
+  - redirecionamento
+     
+     constructor(private router: Router) { }
+     this.router.navigate(['/user']);    
+     
+  - page not found
+  	
+  	* criar component para esta pagina e declara no routing
+  		{
+    	path:'page-not-found',
+    	component:PageNotFoundComponent
+    	}   
+    
+   * novo path para que todas as rotas que nao forem identificada terá que cair nessa
+    	{
+    	path:'**',
+    	redirectTo:'page-not-found'
+    	}	
+    	       
+

@@ -1,0 +1,60 @@
+Streams no Java 8
+
+Considerando uma lista de Clientes List<Cliente> clientes podemos usar Streams para executar várias tarefas que antes precisavam de muito código e que poderiam ser escritas de maneiras distintas. Com Streams essas tarefas ficam mais simples, estruturadas e padronizadas. Vamos conhecer algumas funcionalidades desta API.
+
+count - Retorna a quantidade de elementos presentes em uma stream. Mas se você tem uma lista prefira clientes.size().
+
+clientes.stream().count();
+limit - Retorna uma nova stream que contém apenas os N primeiros elementos da stream original.
+
+clientes.stream().limit(10);
+skip - Retorna uma nova stream que não contém os N primeiros elementos da stream original.
+
+clientes.stream().skip(10);
+sorted - Retorna uma nova stream contendo os elementos da stream original ordenados pela forma natural em ordem crescente.
+
+clientes.stream().sorted();
+sorted.reversed - Retorna uma nova stream contendo os elementos da stream original ordenados de acordo com algum critério em ordem decrescente.
+
+clientes.stream().sorted(comparing(Cliente::getId).reversed());
+filter - Filtra os elementos de acordo com uma condição retornando uma nova stream.
+
+clientes.stream().filter(c -> c.getTipo() == Tipo.PESSOA_FISICA);
+map - Retorna uma stream consistindo no resultado da aplicação de uma função de mapeamento nos elementos da stream.
+
+clientes.stream().map(Cliente::getNome);
+reduce - Realiza uma operação de redução que leva uma sequência de elementos de entrada e os combina em um único resultado, como acumular valores.
+
+clientes.stream().map(Cliente::getLimite).reduce(BigDecimal.ZERO, BigDecimal::add);
+forEach - Realiza uma iteração sobre todos os elementos de uma stream e executa algum tipo de processamento. É equivalente ao loop for (Cliente cliente: clientes).
+
+clientes.stream().forEach(cliente -> {
+   cliente.setLimite(BigDecimal.ZERO);
+});
+allMatch - Retorna true se todos os elementos da stream correspondem ao predicado fornecido.
+
+clientes.stream().allMatch(c -> c.getTipo() == Tipo.PESSOA_FISICA);
+anyMatch - Retorna true se qualquer um dos elementos da stream corresponde ao predicado fornecido.
+
+clientes.stream().anyMatch(c -> c.getNome().equals("Carlos"));
+noneMatch - Retorna true se nenhum dos elementos da stream corresponde ao predicado fornecido.
+
+clientes.stream().noneMatch(c -> c.getNome().equals("Carlos"));
+average - Retorna a média de um conjunto de valores.
+
+clientes.stream().mapToDouble(cliente -> cliente.getLimite().doubleValue()).average().getAsDouble();
+collect - Permite coletar o conteúdo da stream, por exemplo como uma lista.
+
+List<Cliente> resultado = clientes.stream().filter(c -> c.getTipo() == Tipo.PESSOA_FISICA).collect(toList());
+Imagine a tarefa de obter o nome dos 5 clientes do tipo pessoa física com maior limite. Podemos implementar essa tarefa com os 5 passos abaixo:
+
+Filtrar os clientes do tipo pessoa física com filter
+Ordenar os clientes por limite de forma decrescente com sorted.reversed
+Limitar aos 5 primeiros clientes usando limit
+Obter o nome de cada cliente com map
+Armazenar o resultado em uma lista com collect
+List<String> nomes = clientes.stream().
+   filter(c -> c.getTipo() == Tipo.PESSOA_FISICA).
+   sorted(comparing(Cliente::getLimite).reversed()).limit(5).
+   map(Cliente::getNome).collect(toList());
+

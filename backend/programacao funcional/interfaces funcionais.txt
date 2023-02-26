@@ -1,0 +1,155 @@
+2.8
+
+interface funcional
+
+É uma interface que possui um único método abstrato. Suas
+implementações serão tratadas como expressões lambda.
+
+
+*********COMPARATOR*********** 
+
+**  public interface Comparator {
+    int compare(T o1, T o2);
+  }
+
+**  list.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+**  list.sort((s1,s2) -> s1.getName().compareTo(s2.getName().toUpperCase()));
+
+https://blog.caelum.com.br/ordenando-colecoes-com-comparable-e-comparator/amp/
+https://github.com/acenelio/lambda1-java
+
+
+Comparable
+
+Interface que define a operação de comparação do próprio objeto com outro, usado para definir a ordem natural dos 
+elementos de uma coleção. Pode ser usado caso os objetos que serão adicionados na coleção já implementem a interface 
+(Integer, Double, String, etc.), ou serão implementados pelo programador, que tem a chance de embutir esta interface 
+em seu código.
+
+Comparator
+
+Interface que define a operação de comparação entre dois objetos por um objeto externo. É utilizado quando os objetos a 
+serem adicionados não podem ser modificados para aceitarem a interface Comparable (são de uma biblioteca de terceiros, 
+por exemplo), ou é necessária a troca da estratégia de ordenação em tempo de execução (ordenação das linhas de uma tabela, 
+por exemplo). Esta interface provê maior flexibilidade, sem custo adicional significativo. Prefira seu uso, ao invés da 
+interface Comparable, a não ser que esta seja necessária (isto é, você usa uma classe que espera objetos que a implementem) 
+ou se a própria semântica dos objetos exija esa ordem natural (o que é bem subjetivo e específico do domínio/sistema).
+
+
+
+
+
+********PREDICATE*******
+https://mkyong.com/java8/java-8-predicate-examples/
+https://zetcode.com/java/predicate/
+https://github.com/acenelio/lambda2-java
+
+Em Java 8, Predicate é uma interface funcional, que aceita um argumento e retorna um booleano. Normalmente, ele costumava 
+ser aplicado em um filtro para uma coleção de objetos.
+
+Predicados em Java são implementados com interfaces. Predicate<T>é uma interface funcional genérica que representa uma função
+ de argumento único que retorna um valor booleano. Ele está localizado na java.util.functionembalagem. Ele contém um test(T t)
+ método que avalia o predicado no argumento fornecido.
+
+
+@FunctionalInterface
+public interface Predicate<T> {
+  boolean test(T t);
+}
+
+***list.removeIf(p -> p.getPrice() > 100.0);
+***Predicate<Product> pred = p -> {
+         return p.getPrice() > 100.0;
+   };
+
+
+
+*****CONSUMER*****
+
+https://mkyong.com/java8/java-8-consumer-examples/
+https://github.com/acenelio/lambda3-java
+
+
+No Java 8, o consumidor é uma interface funcional; leva um argumento e não retorna nada.
+
+***@FunctionalInterface
+    public interface Consumer<T> {
+     void accept(T t);
+    }
+
+
+
+***list.forEach(p -> p.setPrice(p.getPrice() * 1.1));
+     list.forEach(System.out::println);
+
+
+
+
+***fUNCTION*****
+
+https://gasparbarancelli.com/post/interfaces-funcionais-java-function
+https://github.com/acenelio/lambda4-java
+
+@FunctionalInterface
+public interface Function<P, S> {
+
+   R apply(T t);
+
+}
+
+serve para criar um objeto apartir de outro exemplo recebe Product retorna uma String
+tem que usar o map
+
+
+++exemplos
+
+Fazer um programa que, a partir de uma lista de produtos, gere uma
+nova lista contendo os nomes dos produtos em caixa alta.
+
+• A função "map" (não confunda com a estrutura de dados Map) é uma 
+função que aplica uma função a todos elementos de uma stream.
+• Conversões:
+• List para stream: .stream()
+• Stream para List: .collect(Collectors.toList()
+
+
+
+
+***Stream()****
+
+https://medium.com/@racc.costa/streams-no-java-8-e-no-java-9-36177c5c3313
+
+recurso que traz novas classes e métodos que ajudam a manipular coleções de maneira mais simples e eficiente, lançando mão do estilo de programação funcional.
+
+List<Integer> list = Arrays.asList(3,4,5,10,7);
+Stream<Integer> st1 = list.stream();
+
+
+ordem alfabetica criar um comparator<employee> p -> email
+criar uma nova lista com base em quem for tiver salario maior que 2000 filter collect
+soma os usuarios com letra m primeiro 'filter' depois um reduce(0, (x,y) -> x + y)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

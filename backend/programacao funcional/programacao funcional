@@ -1,0 +1,80 @@
+https://medium.com/@nvieirarafael/programação-funcional-no-java-2a005964cb20
+https://www.alura.com.br/artigos/programacao-funcional-o-que-e
+
+É um paradigma que possibilita a criacao de software, contendo funcoes puras,que nao dependem de outros estados.É voce passar um comportamento para um metodo atravez de interfaces funcionais(sao funcoes que contem um unico metodo abstrato).Ela e baseada no formalismo matemático Cálculo Lambda
+
+para ficar melhor o entendimento colocamos a comparacao com programacao imperativa e programacao funcional.
+
+* como se descreve algo a ser computado
+
+ - imperativa
+ 	através de comandos, logica, como o computador deverá fazer em cada etapa,algoritmo puro
+ 	
+ - declarativa
+ 	através de expressoẽs, voce diz para o computador o que deve ser feito, ai então o pc vai montar a logica,voce apenas declara
+ 	
+* funcoes possuem transparencia referencial(ausencia de efeitos colaterais)?
+ 
+ - uma funcao possui transparencia referencial se seu resultado for sempre o mesmo para os mesos dados de entrada.Beneficios:simplicidade e previsibilidade
+ 
+ - se a funcao acessar outros dados fora da funcao fica dificil ter previsibilidade, mas se ela recebe      
+   parametros e nao acessar dados fora dela, ela terá mas previsibilidade retornando sempre os mesmos resultados para os mesmos parametros
+   
+   imperativa:fraco
+   declativa:forte
+   
+ - esta funcao nao é declativa pois ela acessa uma variavel fora dela
+    
+      public static int globalValue = 3;
+		
+		public static void main(String[] args) {
+			int[] vect = new int[] {3, 4, 5};
+			changeOddValues(vect);
+			System.out.println(Arrays.toString(vect));
+	    }
+
+       public static void changeOddValues(int[] numbers) {
+	   		for (int i=0; i<numbers.length; i++) {
+					if (numbers[i] % 2 != 0) {
+					numbers[i] += globalValue;
+	    	}
+       }
+       
+  * objetos imutaveis
+     
+     imperativa:pode mudar vetor,variaveis
+     declativa:imutaveis ao declarar um valor ela permanecerá 
+     
+  * funcoes sao objetos de primeira ordem
+    poder passar uma funcao dentro outra funcao
+    
+     list.sort(Program::compareProducts);
+     list.forEach(System.out::println);
+     
+     imperativa:nao tem como fazer isso
+     
+   
+   
+   * expressividade/codigo conciso
+   
+      na imperativa o codigo é muito maior(verbos),ja na declativa é mais especifico
+      
+      imperativa
+      	Integer sum = 0;
+	  	for (Integer x : list) {
+			sum += x;
+		}
+		
+	  declarativa
+	  	Integer sum = list.stream().reduce(0, Integer::sum);
+	  	
+	
+	
+	* tipagem dinamica/inferencia de tipos  	
+		nao precisa declara o tipo o compirador ja deduz qual é tipo da variavel "(p1,p2)"
+		
+		list.sort((p1,p2) -> p1.getName().toUppercase().compareTo(p2.getName().toUpperCase());
+	  		
+   
+             
+  

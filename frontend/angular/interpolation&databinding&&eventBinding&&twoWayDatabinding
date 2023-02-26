@@ -49,3 +49,27 @@ html
 
 <button (click)='onSubmitForm()'>Register</button>
 <p>{{ formMessage }}</p>  
+
+
+=======one way databinding=========
+
+sentido unico so tem mudanca na logica, se a logica mudar entao no html mudar
+
+ts.
+ text = 'IgniteUI for Angular';
+ 
+html
+<input [value]="text" name="tex"> 
+
+
+========two way databindig==========
+
+É aqui que combinamos o Property e Event Binding para reagir aos eventos e output ao mesmo tempo.
+<element [(property)]='value'></element>
+
+ts.
+ public emailAddress!:string;
+ 
+ html
+ <input type="text" [(ngModel)]="emailAddress">
+<p>{{ emailAddress }}@gmail.com</p>

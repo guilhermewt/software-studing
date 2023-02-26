@@ -2,46 +2,30 @@
 
 /*tests*/
 
-var rabbitsTotal = 0
-var frogTotal = 0
-var mouseTotal = 0
 
-let testNumber = prompt('Quantos casos de teste serao digitados?')
+let vetor = []
 
-for(var i = 1; i<=testNumber; i++){
-    var quantityGuiniaPig = prompt('Quantidade de cobaias: ')
-    var typeGuiniaPig = prompt('Tipo de cobaia: ')
-    quantityGuiniaPig = parseInt(quantityGuiniaPig)    
-
-    if(typeGuiniaPig == 'c'){
-        
-        rabbitsTotal += quantityGuiniaPig
-    }
-    else if(typeGuiniaPig == 'r'){
-         mouseTotal += quantityGuiniaPig   
-    }
-    else{
-        frogTotal += quantityGuiniaPig
-    }
-
+var qtd = prompt('Quantos numeros voce vai digitar? ')
+for(var i = 0; i<qtd; i++){
+    let value = prompt('Digite um numero:' )
+    vetor.push(parseInt(value));
 }
 
+console.log(vetor)
 
+var soma = vetor.reduce((x,y) => x + y)
 
+var media = soma / vetor.length;
 
-var total = rabbitsTotal + frogTotal + mouseTotal;
+console.log(soma)
 
-var rabbitsPercent = rabbitsTotal / total * 100
-var frogPercent = frogTotal / total * 100
-var mousePercent = mouseTotal / total * 100
+console.log(media)
 
-rabbitsPercent = +(rabbitsPercent.toFixed(2))
-frogPercent = +(frogPercent.toFixed(2))
-mousePercent = +(mousePercent.toFixed(2))
+vetor.filter(x => x < 0).forEach(x => console.log(x))
 
-console.log('rabbits: ' + rabbitsPercent)
-console.log('mouse: ' + mousePercent)
-console.log('frog: ' + frogPercent)
+// console.log(vetor.find((x) => x < 0))
+
+// console.log(vetor.find((vetor) => vetor < 0))
 
 //experiencias coelhos / total * 100
 
@@ -61,6 +45,10 @@ console.log('media = ' + mostrar)
 */
 
 /*
+
+(reduce)
+executa para cada objeto do array uma funcao "ele é um agregador"
+var soma = vetor.reduce((x,y) => x + y)
 
 (arredondar numero)
 const x = 1.3823
