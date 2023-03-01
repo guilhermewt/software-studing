@@ -1,0 +1,66 @@
+﻿Pesquisa:
+https://www.devmedia.com.br/java-declaracao-e-utilizacao-de-classes/38374#:~:text=Uma%20classe%20é%20um%20elemento,características%20e%20comportamentos%20desse%20objeto.
+
+
+					classes
+
+classe é um elemento no java que utilizamos para representar um objeto do mundo real.Dentro dela é comum declararmos atributos e métodos, que representam, respectivamente, as características e comportamentos desse objeto.
+
+ex class product{}
+
+* regras
+
+- Manter o nome simples e descritivo;
+- Usar palavras inteiras, isto é, sem siglas e abreviações;
+- A primeira letra de cada palavra deve estar em caixa alta.
+	
+* como utilizar
+
+1 - Product product; criar
+2 - Product product = new Product(); 'instanciar/criar objeto na memoria
+3 - Product product = new Product('name'); 'colocar um objeto'
+4 - depois disso tudo a variavel 'product' é uma referencia para o objeto    criado
+
+* extends
+	
+   Quando uma classe precisa herdar características de outra, fazemos uso de herança, conceito da orientação a objetos que em Java é representado pela palavra-chave extends.
+   Com extends, todos os atributos e métodos não-privados de ClasseQualquer serão herdados por MinhaClasse. Por isso, é comum dizer que a classe herdada (ClasseQualquer) é pai da classe que herdou seus elementos (MinhaClasse).
+	
+public class Produto {
+   public double valorCompra;
+   protected double valorVenda;
+	
+public class Computador extends Produto {
+   private String processador;
+   
+* implements
+
+Quando uma classe precisa implementar os métodos de uma interface, utiliza-se a palavra reservada implements:
+Ao utilizar implements a classe passa a ser obrigada a implementar os métodos da interface.
+os metodos que foram sobreescrito receberam a anotacao @Override
+	
+	
+                               metodos
+
+  Um método em Java é equivalente a uma função, subrotina ou procedimento em outras linguagens de programação.
+Não existe em Java o conceito de métodos globais. Todos os métodos devem sempre ser definidos dentro de uma classe.	
+	
+* sintax:
+	
+[modificador] tipo_retorno identificador ([argumentos]) {
+//Corpo do método }
+	
+* modificadores:
+	
+public,protected,private,
+	
+* nome de metodos:
+	
+O nome de um método deve começar com uma letra (a-z/A-Z), um underscore (_), ou um sinal de dólar ( $ ). Os caracteres subsequentes podem incluir os dígitos de 0 a 9.
+	
+* argumentos:
+	
+Um método pode ter zero ou mais argumentos (ou parâmetros).
+O nome do método acrescido de seus parâmetros é denominado assinatura do
+método.
+	

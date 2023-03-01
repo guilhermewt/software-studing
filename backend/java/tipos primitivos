@@ -1,0 +1,28 @@
+https://www.javatpoint.com/pt/tipo-de-dado-em-java
+
+tipos de primitivos:
+em java sao blocos de contrucao que nos permitem manipular os dados. como java é uma linguagem tipada todas todas variaveis precisam de declarar o tipo delas.existem 8 de tipos primitivos em java que sao:
+
+
+tipos primitivos: boolean, char, byte, short, int, long, float, e double.
+tipos de nao primitivos:classes,interfaces,arrays
+
+boolean: somente dois tipos false ou true 1 bit
+
+byte: inteiro de -128 a 120 (um byte é quatro vezes menor que um int) 16 bits
+
+short: inteiro de -32.768 até 32.767 32 bits
+
+int:inteiro -2.147.483.648 (-2³¹) até 2.147.483.647 32 bits
+
+long: é um inteiro -9.223.372.036.854.775.808 (-2?³) até 9.223.372.036.854.775.807 64 bits
+O tipo de dado long é usado quando você precisa de uma faixa de valores maior do que a fornecida por int.
+
+float:float é um ponto flutuante, sua faixa de valor é ilimitada 32 bits,
+se você precisar economizar memória em grandes arrays (matrizes) de número de ponto flutuante. O tipo de dado float nunca deve ser usado para valores precisos, como moeda. Seu valor padrão é 0.0f.
+
+double: é um ponto flutuante sua faixa de valor tambem é ilimitada 64 bits
+O tipo de dado double também não deve ser usado para precisar valores, como moeda. Seu valor padrão é 0.0d.
+
+char:O tipo de dado char é um único caractere unicode de 16 bits O tipo de dado char é um único caractere unicode de 16 bits
+
