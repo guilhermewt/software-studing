@@ -3,25 +3,21 @@
 /*tests*/
 
 
-let vetor = []
+let A = [67]
+let B = []
+let C = []
 
-var qtd = prompt('Quantos numeros voce vai digitar? ')
-for(var i = 0; i<qtd; i++){
-    let value = prompt('Digite um numero:' )
-    vetor.push(parseInt(value));
-}
+console.log (A.forEach((x) => x.indice == 0))
 
-console.log(vetor)
 
-var soma = vetor.reduce((x,y) => x + y)
+// for(var i = 0; i<6; i++){
+//     C. = A.indexOf[i] + B.indexOf(i);
+// }
 
-var media = soma / vetor.length;
+// C.forEach(console.log)
+// console.log(C)
 
-console.log(soma)
 
-console.log(media)
-
-vetor.filter(x => x < 0).forEach(x => console.log(x))
 
 // console.log(vetor.find((x) => x < 0))
 
@@ -46,9 +42,12 @@ console.log('media = ' + mostrar)
 
 /*
 
+(porcentagem)
+
 (reduce)
 executa para cada objeto do array uma funcao "ele é um agregador"
 var soma = vetor.reduce((x,y) => x + y)
+var soma = vetor.map(x => x.altura).reduce((x,y) => x + y)
 
 (arredondar numero)
 const x = 1.3823
