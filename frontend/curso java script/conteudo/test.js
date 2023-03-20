@@ -3,27 +3,14 @@
 /*tests*/
 
 
-let A = [67]
-let B = []
-let C = []
+let a = [8,2,11,14,13,20]
 
-console.log (A.forEach((x) => x.indice == 0))
+let pares = a.filter(x => x % 2 == 0)
 
-
-// for(var i = 0; i<6; i++){
-//     C. = A.indexOf[i] + B.indexOf(i);
-// }
-
-// C.forEach(console.log)
-// console.log(C)
+console.log('MEDIA = ' + pares.reduce((x,y) => x+y) / pares.length);
 
 
 
-// console.log(vetor.find((x) => x < 0))
-
-// console.log(vetor.find((vetor) => vetor < 0))
-
-//experiencias coelhos / total * 100
 
 /*
 var firstValue = 6.5
@@ -41,6 +28,10 @@ console.log('media = ' + mostrar)
 */
 
 /*
+
+(array)
+for(var i = 0; i < A.length; i++) {C[i] = A[i] + B[i];} //acessar pelo indice
+C.forEach(x => console.log(x)) //imprimir cada linha
 
 (porcentagem)
 

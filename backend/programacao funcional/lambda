@@ -1,0 +1,85 @@
+* .filter e .map
+
+filter(usar uma predicate) filtrar objetos e pode criar nova lista de objetos
+map(usar uma function) filtrar o que esta dentro do objeto e criar uma nova lista com base na funcao(so vai para nova lista o que esta no argumento
+da funcao)
+
+List<String> languages = Arrays.asList("Java", "Scala", "C++", "Haskell", "Lisp");
+
+        // filtrar todos os nomes que iniciam com J
+        languages.stream().filter(l -> l.toUpperCase().startsWith("J")).forEach(System.out::print);
+
+        // filtrar todos os nomes que possuem mais de 5 caracteres
+        languages.stream().filter(l -> l.length() > 5).forEach(System.out::print);
+
+        // Transformar esta lista em uma lista de inteiros contendo o tamanho de cada palavra e imprimir
+        List<Integer> collect = languages.stream().map(l -> l.length()).collect(Collectors.toList());
+
+        collect.forEach(System.out::print);
+
+=============================================================================     
+
+* for tradicional para forEach 
+
+List<Integer> costBeforeTax = Arrays.asList(100, 200, 300, 400, 500);
+costBeforeTax.forEach(cost -> System.out.println( cost + cost ));     
+
+List<Pessoa> costBeforeTax = Arrays.asList(new Pessoa("João", 2531.0), new Pessoa("José", 1600.0), new Pessoa("Nicolas", 2810.0));
+costBeforeTax.forEach( p -> System.out.println( p.salario * 5 / 100 ) ); 
+
+List<String> languages = Arrays.asList("Java", "Scala", "C++", "Haskell", "Lisp");
+languages.forEach(System.out::println);
+
+=============================================================================
+
+* Filtro com a utilização da classe stream
+
+ List<Usuario> usuarios = Arrays.asList(
+                new Usuario("maikon", false),
+                new Usuario("jose", false),
+                new Usuario("paulo", true),
+                new Usuario("ronaldo", true));
+
+        // Criar uma nova lista de usuários ativos e imprimir usando java 8 e forEach
+        usuarios.stream()
+                .filter(usuario -> usuario.ativo)
+                .forEach( u -> System.out.println(u.usuario) );
+
+==============================================================================
+
+.map
+O map permite criar novas listas mapeando valores de uma coleção para transformar e obter novos resultados.                
+
+ List<String> G7 = Arrays.asList("USA", "Japan", "France", "Germany", "Italy", "U.K.","Canada");
+
+        // transformar todos os paises para letras maiusculas e concatenar em uma string utilizando join por , com java 8
+        List<String> maiuscula = G7.stream()
+                .map(a -> a.toUpperCase())
+                .collect(Collectors.toList());
+
+        System.out.println( String.join(",", maiuscula) );
+
+*        
+
+List<Integer> numbers = Arrays.asList(9, 10, 3, 4, 7, 3, 4);
+
+        // multiplicar todos os números em por eles mesmos e criar uma nova lista com o resultado da multiplicação.
+        // ao final imprimir usando java 8
+        List<Integer> collect = numbers.stream()
+                .map(n -> n * n)
+                .collect(Collectors.toList());
+
+        collect.forEach(System.out::println);    
+==============================================================================    
+obter dados estatísticos a partir  
+
+List<Integer> numbers = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29);
+
+        // Usando java 8 retire estatisticas da lista como maximo, minimo, soma e média
+        IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+
+        System.out.println( stats.getMax() );
+        System.out.println( stats.getMin() );
+        System.out.println( stats.getSum() );
+        System.out.println( stats.getAverage() );
+        System.out.println( stats.getCount() );          

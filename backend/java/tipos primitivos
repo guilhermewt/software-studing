@@ -1,7 +1,7 @@
 https://www.javatpoint.com/pt/tipo-de-dado-em-java
 
 tipos de primitivos:
-em java sao blocos de contrucao que nos permitem manipular os dados. como java é uma linguagem tipada todas todas variaveis precisam de declarar o tipo delas.existem 8 de tipos primitivos em java que sao:
+em java sao blocos de contrucao que nos permitem manipular os dados. como java é uma linguagem tipada todas variaveis precisam de declarar o tipo delas.existem 8 de tipos primitivos em java que sao:
 
 
 tipos primitivos: boolean, char, byte, short, int, long, float, e double.

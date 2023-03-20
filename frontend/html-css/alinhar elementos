@@ -1,0 +1,24 @@
+//https://pt.stackoverflow.com/questions/2817/qual-a-melhor-forma-de-centralizar-um-elemento-vertical-e-horizontalmente
+
+
+<div class="pai">
+	<div class="conteudo">
+		conteudo
+	</div>
+</div>
+
+
+css 
+
+===1=====
+.pai{
+    display: flex;
+    align-items: center; //centraliza horizontalmente
+    justify-content: center; //cetraliza verticalmente
+    }
+    
+===2====
+
+.conteudo{
+margin:auto
+}   

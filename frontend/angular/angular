@@ -930,6 +930,7 @@ resumo: ViewContainerRef
   }
 
 (exibir mensagem com ngx toast)
+https://github.com/scttcper/ngx-toastr
 
  * instalar na versao: npm i ngx-toastr@13.2.1
  
