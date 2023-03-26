@@ -3,13 +3,32 @@
 /*tests*/
 
 
-let a = [8,2,11,14,13,20]
+let a = [
+    {altura:1.70,genero:'f'},
+    {altura:1.83,genero:'m'},
+    {altura:1.54,genero:'m'},
+    {altura:1.61,genero:'f'},
+    {altura:1.75,genero:'f'},
+]
 
-let pares = a.filter(x => x % 2 == 0)
 
-console.log('MEDIA = ' + pares.reduce((x,y) => x+y) / pares.length);
+var ordernar = a.sort(function(x,y){
+    return x.altura - y.altura
+})
 
 
+var mulhersomaAltura = a.filter(x => x.genero = 'f')
+                            .map(x => x.altura)
+                            .reduce((x,y) => x + y);
+
+var mulherqtd = a.filter(x => x.genero = 'f').length;      
+
+var mediaMulherAltura = mulhersomaAltura / mulherqtd
+
+console.log('menor altura = ' + ordernar.shift().altura)
+console.log('maior altura = ' + ordernar.pop().altura)
+console.log('numero de homens = ' + a.filter(x => x.genero = 'm').length)
+console.log('media altura das mulheres = ' + mediaMulherAltura.toFixed(2))
 
 
 /*

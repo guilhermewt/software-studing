@@ -506,6 +506,20 @@ union
 (select CITY,LENGTH(CITY) from STATION order by Length(CITY) desc, CITY limit 1)
 
 
+(substr)
+
+A função SUBSTR() extrai uma substring de uma string (começando em qualquer posição).
+SUBSTR(string, comecar, ate onde vai
+
+Extraia uma substring de uma string (comece na posição 5, extraia 3 caracteres):
+SELECT SUBSTR("SQL Tutorial", 5, 3) AS ExtractString;) //Tut
+
+
+Consultar a lista de nomes de CITY de STATION que possuem vogais (ou seja, a, e, i, o e u) 
+como primeiro e último caractere. Seu resultado não pode conter duplicatas.
+select distinct(city) from station where substr(city,1,1) in ('a','e','i','o','u') and substr(city,-1,1) in ('a','e','i','o','u');
+
+
 
 =======================================================================================================
 -------------------------------------------------------------------------------------------------------
