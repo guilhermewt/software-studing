@@ -1,0 +1,52 @@
+referencias:
+https://pt.stackoverflow.com/questions/131091/o-que-é-upcasting-e-downcasting-na-linguagem-java
+https://www.udemy.com/course/java-curso-completo/learn/lecture/10793760#questions
+
+
+UpCasting (subir a hierarquia)
+
+É quando uma superclasse recebe uma referência da subclasse. Implícito, pois gato É UM felino.
+
+Ex:
+
+Gato g = new Gato();
+Felino f = g;
+
+DownCasting (descer a hierarquia)
+
+É quando uma subclasse recebe uma referência de uma superclasse. Não implícito, porque o compilador não sabe se realmente a instância é do tipo da subclasse declarada, pois, como neste exemplo, Felino pode ser um gato ou um Leao. Mas como o programador sabe que é do tipo gato, ele coloca a subclasse entre parênteses, indicando ao compilador que o Casting está correto.
+
+Ex:
+
+Felino f = new Gato();
+Gato g = (Gato) f;
+Obs.: se o casting não estiver correto, ocorre a excessão ClassCastException
+
+Ex:
+
+Felino f = new Leao();
+Gato g = (Gato) f; //vai lancar uma excessao o objeto gato esta recebendo um objeto do tipo leao
+
+
+
+
+instanceOf
+
+O instanceof é um operador que permite testar se um objeto é uma instância de um tipo específico de uma class, subclass ou interface.
+O instanceof em java também é conhecida como operador de comparação de tipos, isso porque compara a instância com o tipo.
+No exemplo abaixo antes de instanciar os objeto gato e leao estou fazendo uma condicional para testar se os objetos sao do mesmo tipo
+
+Felino f = new Gato();
+Felino l = new Leao();
+
+if(f instanceof Gato){
+  Gato g = (Gato) f; // f é do tipo gato entao aqui funciona
+} 
+
+if(f instanceOf Leao){
+  Leao l = (Leao) f; //f nao é do tipo leao entao nao funciona
+} 
+
+if(l instanceOF Leao){
+  Leao l = (Leao) l; //l é do tipo leao entao funciona
+}

@@ -10,6 +10,7 @@ SELECT * FROM person.EmailAddress;
 (DISTINCT)
  pegar apenas nomes unicos sem repeticao
 SELECT DISTINCT LastName FROM person.person;
+select count(city) - count(distinct city) from station
 
 (OPERADORES)
  =, >, <, >=, <=, '<> diferente', 'and e', 'OR ou'
@@ -519,7 +520,10 @@ Consultar a lista de nomes de CITY de STATION que possuem vogais (ou seja, a, e,
 como primeiro e último caractere. Seu resultado não pode conter duplicatas.
 select distinct(city) from station where substr(city,1,1) in ('a','e','i','o','u') and substr(city,-1,1) in ('a','e','i','o','u');
 
+(not in)
+Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
 
+select distinct city from station where substr(city,1,1) not in ('a','e','i','o','u')
 
 =======================================================================================================
 -------------------------------------------------------------------------------------------------------

@@ -3,32 +3,53 @@
 /*tests*/
 
 
+/**
+ * definir os objetos
+ * criar uma lambda para pecorrer calculando e gravando nas variaveis
+ * pegar valor total de compra e venda
+ * subtrar venda por compra
+ */
+
+
 let a = [
-    {altura:1.70,genero:'f'},
-    {altura:1.83,genero:'m'},
-    {altura:1.54,genero:'m'},
-    {altura:1.61,genero:'f'},
-    {altura:1.75,genero:'f'},
+    {nome:'feijao',p_compra: 10.00, p_venda:11.00},
+    {nome:'arroz',p_compra: 12.00, p_venda:12.80},
+    {nome:'oleo',p_compra: 5.00, p_venda:5.70},
+    {nome:'sal',p_compra: 3.00, p_venda:4.00},
+    
 ]
 
+let abaixoDez = 0;
+let entreDeze20 = 0;
+let acimade20 = 0;
 
-var ordernar = a.sort(function(x,y){
-    return x.altura - y.altura
+a.forEach(function(x){
+  
+    calculo = ((x.p_venda - x.p_compra) * 100) / x.p_compra
+  
+    if(calculo < 10){
+        abaixoDez++
+    }
+    else if(calculo >= 10 && calculo <= 20){
+        entreDeze20++
+    }
+    else{
+        acimade20++
+    }
 })
 
+var total_compra = a.map(x => x.p_compra).reduce((x,y) => x + y)
+var total_venda = a.map(x => x.p_venda).reduce((x,y) => x + y)
+var lucro_total = total_venda - total_compra
 
-var mulhersomaAltura = a.filter(x => x.genero = 'f')
-                            .map(x => x.altura)
-                            .reduce((x,y) => x + y);
+console.log("abaixo de 10: " + abaixoDez)
+console.log("entre dez e 20: " + entreDeze20)
+console.log("acima de 20: " + acimade20)
 
-var mulherqtd = a.filter(x => x.genero = 'f').length;      
+console.log("total valor da compra: " + total_compra)
+console.log("total valor da compra: " + total_venda.toFixed(2))
+console.log("lucro_total: " + lucro_total.toFixed(2))
 
-var mediaMulherAltura = mulhersomaAltura / mulherqtd
-
-console.log('menor altura = ' + ordernar.shift().altura)
-console.log('maior altura = ' + ordernar.pop().altura)
-console.log('numero de homens = ' + a.filter(x => x.genero = 'm').length)
-console.log('media altura das mulheres = ' + mediaMulherAltura.toFixed(2))
 
 
 /*
