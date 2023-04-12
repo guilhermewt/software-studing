@@ -1,32 +1,34 @@
 ========(backend frameworks)==========
-spring_boot_fundamentos ok
-tests
+spring_boot_fundamentos 
+tests 5
 modelo de exceptions
 ========(pasta java)==========
-classes&metodos ok
-comportamento de memoria ok
-generics ok
+classes&metodos 
+comportamento de memoria 
+generics 
 injecao de dependencia ok
-interfaces & abstract ok
-strings ok
-tipos primitivos ok
+interfaces & abstract 
+strings 
+tipos primitivos 
 ========(poo)==========
 heranca com interfaces
 interfaces &classes abstract
-livro ok falta oo
+livro
+oop livro
+revisao papel
 ========(programacao funcional)==========
-programacao funcional ok
-interfaces funcionais ok
-comparator ok
-consumer ok
-function ok
-predicate ok
-stream ok
+programacao funcional 
+interfaces funcionais 
+comparator 
+consumer 
+function 
+predicate 
+stream 
 lambda ok
-funcoes que recebem.....ok
+funcoes que recebem..... ok
 ========(rest&restfull)==========
-arquitetura de microservicos ok
-consumindo apis com resttemplate ok
-rest ok
-@restcontroller &&@controller ok
-spring rest template ok
+arquitetura de microservicos 
+consumindo apis com resttemplate 
+rest 
+@restcontroller &&@controller 
+spring rest template 

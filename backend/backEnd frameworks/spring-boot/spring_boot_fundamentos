@@ -33,4 +33,28 @@ spring boot starters Data jpa
  Spring Boot Starters
  spring boot starters web
  spring boot starters test 
- spring boot starters Data jpa  
+ spring boot starters Data jpa 
+  
+ 
+springApplication.run(ApplicatioStart.class, args)
+esta classe que é responsavel por fazer o projeto virar spring. Ela fica no metodo 'public static void main 
+
+@EnableAutoConfiguration
+esta anotacao é responsavel por toca configuracao das dependencias para a aplicacao executar
+
+@componentScan
+ler todos os pacotes e transformar as classes em bean
+
+@configuration
+configuracao adicionais, com esta anotacao  é adicionado mais filtros de seguranca
+
+@SprigBootApplication
+esta a anotacao contem todas as outras acima dentro dela
+
+o que é bean
+https://medium.com/javarevisited/introduction-to-bean-annotation-in-spring-boot-simplify-your-dependency-injection-9833827a673a
+
+anotacoes @componet,service.....
+https://medium.com/javarevisited/difference-between-controller-service-and-repository-annotations-in-spring-framework-c2d110e6436a
+ 
+ 
