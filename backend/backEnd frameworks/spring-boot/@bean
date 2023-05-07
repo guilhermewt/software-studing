@@ -1,0 +1,5 @@
+quando eu tenho este anotacao significa que aquele metodo é um bean. O spring que vai gerenciar o retorno daquele metodo. Contudo qualquer component pode usar este metodo(bean)
+
+ex.eu tenho dentro de um sistema um metodo que sera usado muitas vezes. Na forma tradicional toda vez que precisar usar este metodo sera necessario criar uma instacia e isso vai gerar uma grande repeticao de codigo. Os beans resolve este problema pois sera necessario criar este metodo apenas uma vez e ele podera ser reusavel quantas vezes desejar
+
+https://medium.com/javarevisited/introduction-to-bean-annotation-in-spring-boot-simplify-your-dependency-injection-9833827a673a

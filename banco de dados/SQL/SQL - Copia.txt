@@ -525,6 +525,18 @@ Query the list of CITY names from STATION that do not start with vowels. Your re
 
 select distinct city from station where substr(city,1,1) not in ('a','e','i','o','u')
 
+(expressoes sql case)
+select case 
+when (a + b <= c or a + c <= b or c + b <= a) then 'Not A Triangle'
+when (a = b and b = c) then 'Equilateral'
+when (a = b or b = c or c = a) then 'Isosceles'
+when (a <> b and a <> c and b <> c) then 'Scalene'
+
+end
+from triangles
+
+https://www.w3schools.com/sql/sql_case.asp
+
 =======================================================================================================
 -------------------------------------------------------------------------------------------------------
 (desafio fundamentos)
