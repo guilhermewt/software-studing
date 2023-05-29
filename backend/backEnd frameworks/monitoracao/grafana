@@ -1,0 +1,18 @@
+traz dashboards prontos para monitorar a aplicacao
+
+* docker compose
+grafana:
+    image: grafana/grafana:latest
+    container_name: granafa
+    ports:
+     - "3000:3000"
+     
+     
+1 - acessar a porta localhost:3000
+2 - ir em datasourch
+3 - selecionar o prometheus
+4 - colocar a url como localhost:9090 ou o ip do container prometheus run and test
+5 - testar em metricas se esta pegando o jvm cpu
+6 - ir no site e procurar por spring boot e selecionar o jvm micrometer do codigo 4701
+7 - no grafana procurar em dashboard a opcao de importar e dentro dela voce colocar o codigo ou a url do micrometer
+8 - antes de importar selecionar o prometheus          

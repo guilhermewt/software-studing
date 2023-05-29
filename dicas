@@ -17,4 +17,8 @@
 - sempre salvar os dados criptografado quando usar spring security
 
 -MAVEN quando estiver com erro ao criar um projeto maven basta remover a class .m2 e depois criar o projeto
+
+- ao tentar se comunicar o grafana com prometheus adicione o ip do container 
+1 - sudo docker container 'name' inspect -> pegue o ip
+2 - grafana -> http://ip:9090
   

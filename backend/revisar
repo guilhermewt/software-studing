@@ -1,15 +1,15 @@
 ========(backend frameworks)==========
-spring_boot_fundamentos ok
-tests 5
-modelo de exceptions
+tests 5 ok
+modelo de exceptions ok
+jpa&hibernets
 ========(pasta java)==========
 classes&metodos ok
 comportamento de memoria ok
 generics ok
 injecao de dependencia ok
 interfaces & abstract ok
-strings 
-tipos primitivos 
+strings ok
+tipos primitivos ok
 ========(poo)==========
 heranca com interfaces ok
 interfaces &classes abstracto k
@@ -27,8 +27,16 @@ stream ok
 lambda ok
 funcoes que recebem..... ok
 ========(rest&restfull)==========
-arquitetura de microservicos 
-consumindo apis com resttemplate
+arquitetura de microservicos ok
+consumindo apis com resttemplate ok
 rest ok
 @restcontroller &&@controller ok
 spring rest template ok
+======spring boot====
+bean
+boas praticas
+hateoas
+cache
+spring_boot_fundamentos ok
+======algoritmos====
+estrutura de dados
