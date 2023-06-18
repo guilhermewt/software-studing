@@ -15,4 +15,27 @@ grafana:
 5 - testar em metricas se esta pegando o jvm cpu
 6 - ir no site e procurar por spring boot e selecionar o jvm micrometer do codigo 4701
 7 - no grafana procurar em dashboard a opcao de importar e dentro dela voce colocar o codigo ou a url do micrometer
-8 - antes de importar selecionar o prometheus          
+8 - antes de importar selecionar o prometheus   
+9 - colocar a configuracao para a jvm coletar os dados(ela deve estar visivel para a anotaçao @springboot)
+    @Bean
+	MeterRegistryCustomizer<MeterRegistry> configurer(
+	    @Value("${spring.application.name}") String applicationName) {
+	    return (registry) -> registry.config().commonTags("application", applicationName);
+	} 
+	
+* alert
+- para criar um alert voce tem que ir no gmail e criar uma senha verificacao duas etapas em app password e criar uma senha
+
+- depois criar as variaveis de ambiente no docker obs.a senha é a mesma gerada no gmail
+environment:
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:465
+      - GF_SMTP_USER=welliston10@gmail.com
+      - GF_SMTP_PASSWORD=rsolhgyadfabofju
+obs. o host pode ser tambem 587
+
+- ir no grafana e fazer o teste em contant point prencher as informacoes e clicar em test obs. ver se chegou no email 
+
+- para resolve o ultimo problema que depois de um tempo de 10s ele automaticamente parava o cpu usage, eu simplesmente excluir o ultimo quadrado (D)     
+
+ 	      

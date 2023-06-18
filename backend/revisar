@@ -1,42 +1,44 @@
-========(backend frameworks)==========
-tests 5 ok
-modelo de exceptions ok
-jpa&hibernets
-========(pasta java)==========
-classes&metodos ok
-comportamento de memoria ok
-generics ok
-injecao de dependencia ok
-interfaces & abstract ok
-strings ok
-tipos primitivos ok
-========(poo)==========
-heranca com interfaces ok
-interfaces &classes abstracto k
-livro(apiok,web,nosql ok
-oop livro ok
-revisao papel
-========(programacao funcional)==========
-programacao funcional ok
-interfaces funcionais ok
-comparator ok
-consumer ok
-function ok
-predicate ok
-stream ok
-lambda ok
-funcoes que recebem..... ok
-========(rest&restfull)==========
-arquitetura de microservicos ok
-consumindo apis com resttemplate ok
-rest ok
-@restcontroller &&@controller ok
-spring rest template ok
 ======spring boot====
-bean
-boas praticas
+bean ok
+boas praticas ok
 hateoas
 cache
 spring_boot_fundamentos ok
+
+========(backend frameworks)==========
+tests 5 
+modelo de exceptions 
+jpa&hibernets ok
+========(pasta java)==========
+classes&metodos 
+comportamento de memoria 
+generics 
+injecao de dependencia 
+interfaces & abstract 
+strings 
+tipos primitivos 
+========(poo)==========
+heranca com interfaces 
+interfaces &classes abstracto
+livro(apiok,web,nosql 
+oop livro 
+revisao papel
+========(programacao funcional)==========
+programacao funcional 
+interfaces funcionais 
+comparator 
+consumer 
+function 
+predicate 
+stream 
+lambda
+funcoes que recebem.....
+========(rest&restfull)==========
+arquitetura de microservicos
+consumindo apis com resttemplate 
+rest
+@restcontroller &&@controller
+spring rest template 
+
 ======algoritmos====
 estrutura de dados

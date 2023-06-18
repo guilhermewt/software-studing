@@ -1,24 +1,48 @@
 (dicas e erros que passei)
 
+========spring boot=============
 - quando injetar usuarios por data.sql e a configuracao for 'identify' colocar o id como default no insert into
-- para deletar um usuario com muitas associacoes, mas entre essas  associacoes tiver associacoes que nao pode ser excluidas como as many to many
-  que , farei o seguinte nas many to many colocarei um cascade = CascadeType.PERSIST e nas demais cascade = CascadeType.DELETE OU ALL
-  
+- para deletar um usuario com muitas associacoes, mas entre essas  associacoes tiver associacoes que nao pode ser excluidas como as many to many que , farei o seguinte nas many to many colocarei um cascade = CascadeType.PERSIST e nas demais cascade = CascadeType.DELETE OU ALL
+
+-MAVEN quando estiver com erro ao criar um projeto maven basta remover a class .m2 e depois criar o projeto  
+
+
+- ao tentar se comunicar o grafana com prometheus adicione o ip do container 
+	1 - sudo docker container 'name' inspect -> pegue o ip
+	2 - grafana -> http://ip:9090
+
+- sempre salvar os dados criptografado quando usar spring security
+
+- na class putRequest os atributos comuns serao todos atualizados menos as listas e parecidas
+
+(error ao tentar salvar entidade que tem uma outra entidade no construtor)
+	Para entender melhor o erro, vamos supor que você tenha duas entidades: Entidade A e Entidade B. A Entidade A tem uma referência à 			Entidade B. Ao salvar uma instância da Entidade A, o Hibernate verifica se a instância da Entidade B associada a ela está sendo 			salva ou não. Se a instância da Entidade B não tiver sido salva (ou seja, é uma instância transitória), o Hibernate lançará esse 			erro.
+	
+	- no meu caso eu tenho uma entidade da api de livros as associacoes entre book e author
+	- para resolver o problema o many to many deve estar na classe que vai fazer a associacao ou seja livro vai receber um set de autor
+	- se for associar voce precisa salvar a entidade 2 primeiro so entao depois voce associar
+	- outro solucao é Usar a anotação CascadeType para configurar o cascading automaticamente -> @ManyToOne(cascade = CascadeType.PERSIST). Dessa forma, quando você salvar a instância da Entidade A, o Hibernate automaticamente salvará a instância da Entidade B associada a ela.
+	
+obs: geralmente o nome deste erro é este: "object references an unsaved transient instance - save the transient instance before flushing"
+obs: nesta api eu nao decidir continuar com tabela author eu savei os autores no atributo	
+	
+	
+	
+
+
+
+
+
+=======frontend=================
 - se der error na instacao do angular apagar npm e instalar de novo
 	sudo rm -rf node_modules.
 	npm install  
 	
 - desinstalar angular -> sudo npm uninstall -g @angular/cli depois limpar cache	-> sudo npm cache clean --force
 
-- na class putRequest os atributos comuns serao todos atualizados menos as listas e parecidas
-
 - (front) quando for alinhar algo deixar o margin padrao para todos os lados right,left...
 
-- sempre salvar os dados criptografado quando usar spring security
 
--MAVEN quando estiver com erro ao criar um projeto maven basta remover a class .m2 e depois criar o projeto
 
-- ao tentar se comunicar o grafana com prometheus adicione o ip do container 
-1 - sudo docker container 'name' inspect -> pegue o ip
-2 - grafana -> http://ip:9090
+
   

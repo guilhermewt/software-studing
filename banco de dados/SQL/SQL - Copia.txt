@@ -1,5 +1,5 @@
 
-++++++======parei no left join 201
+++++++======insert into 83
 
 (select)
 SELECT * FROM person.person;

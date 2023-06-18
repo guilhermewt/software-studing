@@ -10,4 +10,5 @@
 estrutura de dados
  - É quem administrar conjuntos de dados, por exemplo um sistema de uma agenda de tarefas, quem vai fornecer as operacoes da agenda de estruturar os dados em ordem alfabetica,pesquisar, deletar, salvar é a estrutura de dados, como tambem podem servir apenas para agrupar os dados, para manipular os dados
  
- 20
+ 34
+4.9 - Remover um aluno de uma dada posição
