@@ -1,26 +1,32 @@
 ======spring boot====
 bean ok
 boas praticas ok
-hateoas
-cache
+hateoas ok
+cache ok
 spring_boot_fundamentos ok
+=====conceitos=====
+solid parei ok
 
+=======devops====
+docker & spring ok
+docker ok
 ========(backend frameworks)==========
-tests 5 
-modelo de exceptions 
+tests 5 oks
+modelo de exceptions ok
 jpa&hibernets ok
 ========(pasta java)==========
-classes&metodos 
-comportamento de memoria 
-generics 
-injecao de dependencia 
-interfaces & abstract 
-strings 
-tipos primitivos 
+classes&metodos ok
+comportamento de memoria ok
+generics ok
+injecao de dependencia ok 
+interfaces & abstract ok
+strings ok
+tipos primitivos ok
 ========(poo)==========
-heranca com interfaces 
-interfaces &classes abstracto
-livro(apiok,web,nosql 
+heranca com interfaces ok
+upcasting&&downcasting ok
+interfaces &classes abstracto ok
+livro(jvm,jdk,jre,api,webservices,banco de, der,nosql proxy/firewaall,vpn,coonexao ssh,excessoes,websocke
 oop livro 
 revisao papel
 ========(programacao funcional)==========
@@ -42,3 +48,5 @@ spring rest template
 
 ======algoritmos====
 estrutura de dados
+
+
